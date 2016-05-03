@@ -7,10 +7,12 @@ export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 brew update
 brew upgrade --all
 
+brew tap homebrew/versions
+
 brew install coreutils
 brew install git
 brew install git-lfs
-brew install node
+brew install homebrew/versions/node4-lts
 brew install zsh zsh-completions
 brew install wget --with-iri
 brew install p7zip
