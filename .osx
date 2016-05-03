@@ -49,7 +49,7 @@ defaults write com.apple.TimeMachine DoNotOfferNewDisksForBackup -bool true
 # Kill affected applications                                                  #
 ###############################################################################
 
-for app in "Activity Monitor" "Dock" "Finder" "Google Chrome"; do
+for app in "Activity Monitor" "Dock" "Finder"; do
 	killall "${app}" &> /dev/null
 done
 echo "Done. Note that some of these changes require a logout/restart to take effect."

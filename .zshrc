@@ -1,6 +1,6 @@
-export ZSH=/Users/chris/.oh-my-zsh
+export ZSH=~/.oh-my-zsh
 
-DEFAULT_USER="chris"
+DEFAULT_USER=$(whoami)
 ZSH_THEME="agnoster"
 plugins=(git)
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
