@@ -34,6 +34,8 @@ brew cask install tunnelbear
 brew cask install steam
 brew cask install wunderlist
 brew cask install the-unarchiver
+brew cask install virtualbox
+brew cask install vagrant
 
 brew cleanup
 
