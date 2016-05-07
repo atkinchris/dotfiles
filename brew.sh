@@ -17,6 +17,7 @@ brew install zsh zsh-completions
 brew install wget --with-iri
 brew install p7zip
 brew install speedtest_cli
+brew install ansible
 
 brew install vim --override-system-vi
 
