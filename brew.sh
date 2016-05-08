@@ -12,7 +12,7 @@ brew tap homebrew/versions
 brew install coreutils
 brew install git
 brew install git-lfs
-brew install homebrew/versions/node4-lts
+brew install homebrew/versions/node4-lts --without-npm
 brew install zsh zsh-completions
 brew install wget --with-iri
 brew install p7zip
@@ -37,8 +37,11 @@ brew cask install wunderlist
 brew cask install the-unarchiver
 brew cask install virtualbox
 brew cask install vagrant
+brew cask install slack
 
 brew cleanup
+
+curl -L https://www.npmjs.com/install.sh | sh
 
 apm stars --user atkinchris --install
 
