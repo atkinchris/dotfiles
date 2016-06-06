@@ -10,7 +10,7 @@
 [alias]
 	# Add all files and check status
 	aa = !git add -u && git add . && git status -s
-	
+
 	# View abbreviated SHA, description, and history graph of the latest 20 commits
 	l = log --pretty=oneline -n 20 --graph --abbrev-commit
 
@@ -19,6 +19,8 @@
 
 	# Amend the currently staged files to the latest commit
 	amend = commit --amend --reuse-message=HEAD
+
+	pullr = !git submodule update --init --recursive
 
 	# Remove branches that have already been merged with master
 	# a.k.a. ‘delete merged’
