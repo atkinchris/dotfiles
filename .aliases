@@ -8,6 +8,7 @@ alias s="cd ~/Source"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
 alias g="git"
+alias sha256="shasum -a 256"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
