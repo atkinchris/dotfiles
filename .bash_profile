@@ -7,3 +7,7 @@ for file in ~/.{aliases,functions,exports,extra}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
 done;
 unset file;
+
+# Load NVM
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
