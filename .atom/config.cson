@@ -1,37 +1,15 @@
 "*":
   core:
-    ignoredNames: [
-      ".git"
-      ".hg"
-      ".svn"
-      ".DS_Store"
-      "._*"
-      "Thumbs.db"
-      ".pioenvs"
-      ".piolibdeps"
-      ".clang_complete"
-      ".gcc-flags.json"
-    ]
     telemetryConsent: "limited"
     themes: [
       "one-dark-ui"
       "monokai-seti"
     ]
-  editor:
-    fontSize: 16
+  editor: {}
+  "exception-reporting":
+    userId: "211c17d9-a5aa-0099-b619-6249c738cfb4"
   fonts:
     fontFamily: "Hasklig"
-    preview: "The Quick brown fox { 0 !== \"O\" } "
-  "git-diff":
-    showIconsInEditorGutter: true
-  linter:
-    errorPanelHeight: 50
-  "one-dark-ui":
-    tabSizing: "Even"
-  "tool-bar":
-    position: "Left"
-  "tree-view":
-    hideIgnoredNames: true
-    hideVcsIgnoredFiles: true
+  "tree-view": {}
   welcome:
     showOnStartup: false
