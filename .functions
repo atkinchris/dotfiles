@@ -8,6 +8,16 @@ function a() {
 	fi;
 }
 
+# `vs` with no arguments opens the current directory in VS Code Editor, otherwise
+# opens the given location
+function vs() {
+	if [ $# -eq 0 ]; then
+		code .;
+	else
+		code "$@";
+	fi;
+}
+
 # `o` with no arguments opens the current directory, otherwise opens the given
 # location
 function o() {

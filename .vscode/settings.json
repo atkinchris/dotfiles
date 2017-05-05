@@ -1,0 +1,11 @@
+{
+    "editor.fontSize": 14,
+    "editor.fontFamily": "Hasklig",
+    "editor.fontLigatures": true,
+    "workbench.iconTheme": "file-icons",
+    "workbench.colorTheme": "Monokai Dark Soda",
+    "terminal.integrated.fontFamily": "Meslo LG M DZ for Powerline",
+    "editor.scrollBeyondLastLine": false,
+    "explorer.openEditors.visible": 0,
+    "window.zoomLevel": 0.5
+}
