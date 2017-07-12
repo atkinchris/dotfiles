@@ -1,16 +1,6 @@
-# `a` with no arguments opens the current directory in Atom Editor, otherwise
+# `a` with no arguments opens the current directory in VS Code Editor, otherwise
 # opens the given location
 function a() {
-	if [ $# -eq 0 ]; then
-		atom .;
-	else
-		atom "$@";
-	fi;
-}
-
-# `vs` with no arguments opens the current directory in VS Code Editor, otherwise
-# opens the given location
-function vs() {
 	if [ $# -eq 0 ]; then
 		code .;
 	else
