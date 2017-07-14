@@ -7,8 +7,10 @@
     "terminal.integrated.fontFamily": "Meslo LG M DZ for Powerline",
     "editor.scrollBeyondLastLine": false,
     "explorer.openEditors.visible": 0,
-    "window.zoomLevel": 0.5,
-    "javascript.implicitProjectConfig.checkJs": true,
-    "javascript.validate.enable": false,
+    "window.zoomLevel": 0,
+    "files.insertFinalNewline": true,
+    "editor.tabSize": 2,
+    "files.autoSave": "off",
+    "editor.minimap.enabled": false,
     "files.trimTrailingWhitespace": true
 }
