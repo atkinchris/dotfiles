@@ -8,6 +8,10 @@ for file in ~/.{aliases,functions,exports,extra}; do
 done
 unset file
 
-# Load NVM
-export NVM_DIR=~/.nvm
-source $(brew --prefix nvm)/nvm.sh
+# Conditionally load NVM
+NVMSCRIPT=$(brew --prefix nvm 2>/dev/null)/nvm.sh
+if [ $(command -v brew 2>/dev/null) ] && [ -f $NVMSCRIPT ]; then
+		export NVM_DIR=~/.nvm
+		source $NVMSCRIPT
+fi
+unset NVMSCRIPT
