@@ -22,3 +22,10 @@ function o() {
 function mkd() {
 	mkdir -p "$@" && cd "$_";
 }
+
+# Clean Docker containers, images and volumes
+function docker-clean() {
+	docker rm $(docker ps -a -q)
+	docker rmi $(docker images -q)
+	docker volume rm $(docker volume ls -qf dangling=true)
+}
