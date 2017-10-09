@@ -2,29 +2,29 @@
 # opens the given location
 function a() {
 	if [ $# -eq 0 ]; then
-		code .;
+		code .
 	else
-		code "$@";
-	fi;
+		code "$@"
+	fi
 }
 
 # `o` with no arguments opens the current directory, otherwise opens the given
 # location
 function o() {
 	if [ $# -eq 0 ]; then
-		open .;
+		open .
 	else
-		open "$@";
-	fi;
+		open "$@"
+	fi
 }
 
 # Create a new directory and enter it
 function mkd() {
-	mkdir -p "$@" && cd "$_";
+	mkdir -p "$@" && cd "$_"
 }
 
 # Clean Docker containers, images and volumes
-function docker-clean() {
+function dockerclean() {
 	docker rm $(docker ps -a -q)
 	docker rmi $(docker images -q)
 	docker volume rm $(docker volume ls -qf dangling=true)
