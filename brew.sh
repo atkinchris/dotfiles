@@ -8,6 +8,7 @@ brew install git git-lfs
 brew install wget
 brew install zsh zsh-completions
 brew install nvm yarn
+brew install vim rtv ranger highlight the_silver_searcher fzf
 brew cleanup
 
 git lfs install
