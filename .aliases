@@ -10,6 +10,7 @@ alias dt="cd ~/Desktop"
 alias g="git"
 alias commit="git commit -am"
 alias sha256="shasum -a 256"
+alias chrome="/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome"
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
