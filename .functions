@@ -34,3 +34,8 @@ function dockerclean() {
 function dockerhere() {
 	docker run -v $(pwd):/root/files -it ubuntu /bin/bash
 }
+
+# Change to Terraform workspace and apply config
+function tf-apply() {
+	terraform workspace select "$@" && terraform apply -var-file=workspaces/$@.tfvars
+}
