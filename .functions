@@ -36,6 +36,6 @@ function dockerhere() {
 }
 
 # Change to Terraform workspace and apply config
-function tf-apply() {
+function tfapply() {
 	terraform workspace select "$@" && terraform apply -var-file=workspaces/$@.tfvars
 }
