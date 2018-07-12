@@ -60,3 +60,9 @@ function dedupHistory() {
 	awk -F ";" '!seen[$2]++' ~/.zsh_history > $tmpFile
 	mv $tmpFile ~/.zsh_history
 }
+
+# Turn WiFi off and on again to fix slow connections after sleep
+function restartWifi() {
+	networksetup -setairportpower airport off
+	networksetup -setairportpower airport on
+}
