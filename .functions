@@ -23,6 +23,14 @@ function mkd() {
 	mkdir -p "$@" && cd "$_"
 }
 
+# Create a new bootstrapped application
+function createapp() {
+	git clone https://github.com/atkinchris/application-bootstrap.git "$@" && \
+	cd "$_" && \
+	rm -rf .git && \
+	git init
+}
+
 # Clean Docker containers, images and volumes
 function dockerclean() {
 	docker rm $(docker ps -a -q)
