@@ -80,3 +80,42 @@ function restartWifi() {
 function listHomebrew() {
 	brew list -1 | while read cask; do echo -ne "\x1B[1;34m $cask \x1B[0m"; brew uses $cask --installed | awk '{printf(" %s ", $0)}'; echo ""; done
 }
+
+# List all Agents and Daemons
+launchctlAll () {
+	/usr/bin/sudo launchctl list; launchctl list
+}
+
+# Find launchctl Agents and Daemons
+# https://stackoverflow.com/questions/18502705/how-to-know-a-specific-launchd-plist-file-location
+launchctlFind () {
+    LaunchctlPATHS=( \
+        ~/Library/LaunchAgents \
+        /Library/LaunchAgents \
+        /Library/LaunchDaemons \
+        /System/Library/LaunchAgents \
+        /System/Library/LaunchDaemons \
+    )
+
+    for curPATH in "${LaunchctlPATHS[@]}"
+    do
+        grep -R "$curPATH" -e "$1"
+    done
+    return 0;
+}
+
+# Run Docker Compose file in local directory
+compose () {
+	function on_exit {
+		docker-compose stop
+		docker-compose kill
+		docker-compose rm -vf
+	}
+
+	trap on_exit EXIT
+
+	docker-compose kill
+	docker-compose rm -vf
+	docker-compose build
+	docker-compose up --remove-orphans
+}
