@@ -1,5 +1,4 @@
-#!/usr/bin/env bash
-
+#!/bin/bash
 sudo -v
 
 # Keep-alive: update existing `sudo` time stamp until `.osx` has finished
