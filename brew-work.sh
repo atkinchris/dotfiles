@@ -8,7 +8,6 @@ fi
 brew update
 brew upgrade
 
-
 brew install \
   awscli \
   jq \
@@ -16,5 +15,8 @@ brew install \
   terraform
 
 brew tap homebrew/cask
+brew tap caskroom/versions
+
 brew cask install \
-  android-platform-tools
+  android-platform-tools \
+  java8
