@@ -1,8 +1,12 @@
 #!/bin/bash
 set -eu
 
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+if ![ $(command -v brew 2>/dev/null) ]; then
+  ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+fi
 
+brew update
+brew upgrade
 brew install coreutils
 brew install git git-lfs
 brew install wget
