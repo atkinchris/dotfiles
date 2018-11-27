@@ -26,3 +26,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/mas
 mkdir -p ~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 nvm install node
+
+mkdir -p ~/.iterm2
+defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.iterm2"
+defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
