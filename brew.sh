@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eu
 
-if ![ $(command -v brew 2>/dev/null) ]; then
+if ! [ -x "$(command -v brew 2>/dev/null)" ]; then
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
@@ -21,7 +21,8 @@ brew cleanup
 
 git lfs install
 
-mkdir -p ~/.nvm
-nvm install node
-
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+
+mkdir -p ~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+nvm install node
