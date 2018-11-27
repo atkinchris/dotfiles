@@ -7,16 +7,29 @@ fi
 
 brew update
 brew upgrade
-brew install coreutils
-brew install git git-lfs
-brew install wget
-brew install zsh zsh-completions
-brew install nvm yarn
-brew install vim rtv ranger highlight the_silver_searcher fzf
-brew install tree
+
+brew install \
+  coreutils \
+  fzf \
+  git \
+  git-lfs \
+  highlight \
+  nvm \
+  ranger \
+  rtv \
+  the_silver_searcher \
+  tree \
+  vim \
+  wget \
+  yarn --without-node \
+  zsh zsh-completions
 
 brew tap homebrew/cask-fonts
-brew cask install font-hasklig font-meslo-for-powerline font-menlo-for-powerline font-hack-nerd-font
+brew cask install \
+  font-hack-nerd-font \
+  font-hasklig \
+  font-menlo-for-powerline \
+  font-meslo-for-powerline
 
 brew cleanup
 
