@@ -19,7 +19,9 @@ brew tap caskroom/versions
 
 brew cask install \
   android-platform-tools \
-  java8
+  android-sdk \
+  java8 \
+  postman
 
 if ! [ -x "$(command -v rustup 2>/dev/null)" ]; then
   curl https://sh.rustup.rs -sSf | sh
