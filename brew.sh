@@ -24,8 +24,6 @@ git lfs install
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
 mkdir -p ~/.nvm
-source $(brew --prefix nvm)/nvm.sh
-nvm install node
 
 mkdir -p ~/.iterm2
 defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.iterm2"
