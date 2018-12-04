@@ -37,6 +37,8 @@ git lfs install
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
+git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
 mkdir -p ~/.nvm
 
 mkdir -p ~/.iterm2
