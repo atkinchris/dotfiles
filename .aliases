@@ -38,3 +38,7 @@ alias hide="defaults write com.apple.finder AppleShowAllFiles -bool false && kil
 
 # Lock the screen (when going AFK)
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+
+# Android ADB key events
+alias adbwake="adb shell input keyevent 26 && adb shell input swipe 100 100 100 500 100"
+alias adbmenu="adb shell input keyevent 82"
