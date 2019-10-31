@@ -12,5 +12,25 @@
     "editor.tabSize": 2,
     "files.autoSave": "off",
     "editor.minimap.enabled": false,
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+    "workbench.startupEditor": "newUntitledFile",
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/bower_components": true,
+        "**/jspm_packages": true,
+        "**/node_modules": true
+    },
+    "editor.codeLens": false,
+    "emmet.showSuggestionsAsSnippets": true,
+    "editor.snippetSuggestions": "bottom",
+    "sync.gist": "6fd34b7657a7669856f6f5c3e2e00d4c",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "git.autofetch": true,
+    "git.rebaseWhenSync": true,
+    "git.enableSmartCommit": true,
+    "breadcrumbs.enabled": false,
+    "liveshare.featureSet": "insiders"
 }
