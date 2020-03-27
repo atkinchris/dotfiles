@@ -119,3 +119,16 @@ compose () {
 	docker-compose build
 	docker-compose up --remove-orphans
 }
+
+
+# Send a command to a device and cat the output
+send () {
+	DEVICE=$1; shift
+	BAUD=$1; shift
+
+	cat $DEVICE &
+	stty -f $DEVICE $BAUD
+
+	echo -e "$@" > $DEVICE
+	fg
+}
