@@ -10,3 +10,11 @@ export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 # Load fzf for history searching and set it to unique commands only
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 setopt HIST_IGNORE_ALL_DUPS
+
+# Conditionally load NVM
+NVMSCRIPT=~/.nvm/nvm.sh
+if [ -f $NVMSCRIPT ]; then
+		export NVM_DIR=~/.nvm
+		source $NVMSCRIPT
+fi
+unset NVMSCRIPT
