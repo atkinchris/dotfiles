@@ -23,3 +23,17 @@ If you've updated your local copies of these files in your home directory, and w
 ```sh
 rsync -avr --no-perms --files-from=files.txt ~ .
 ```
+
+## VS Code
+
+Visual Studio Code settings are no longer copied automatically, as these are maintained with the sync settings plugin. However, local copies are included here for archiving purposes.
+
+To copy them to the local system, use:
+
+```sh
+# Linux
+rsync -avr --no-perms ./vscode/ $HOME/.config/Code/User/
+
+# macOS
+rsync -avr --no-perms ./vscode/ "$HOME/Library/Application Support/Code/User/"
+```

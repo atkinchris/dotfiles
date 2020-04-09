@@ -3,7 +3,6 @@
     "editor.fontFamily": "Hasklig",
     "editor.fontLigatures": true,
     "workbench.iconTheme": "file-icons",
-    "workbench.colorTheme": "Monokai Dark Soda",
     "terminal.integrated.fontFamily": "Meslo LG M DZ for Powerline",
     "editor.scrollBeyondLastLine": false,
     "explorer.openEditors.visible": 0,
@@ -32,5 +31,30 @@
     "git.rebaseWhenSync": true,
     "git.enableSmartCommit": true,
     "breadcrumbs.enabled": false,
-    "liveshare.featureSet": "insiders"
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "workbench.colorCustomizations": {
+        "[Monokai Dark Soda]": {
+            "input.background": "#242424"
+        }
+    },
+    "editor.gotoLocation.multipleDeclarations": "goto",
+    "editor.gotoLocation.multipleDefinitions": "goto",
+    "editor.gotoLocation.multipleImplementations": "goto",
+    "editor.gotoLocation.multipleReferences": "goto",
+    "editor.gotoLocation.multipleTypeDefinitions": "goto",
+    "workbench.colorTheme": "One Monokai"
 }
