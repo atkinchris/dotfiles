@@ -1,7 +1,6 @@
 ./.bashrc
 ./.zshrc
 ./.p10k.zsh
-./.iterm2/com.googlecode.iterm2.plist
 ./.exports
 ./.vimrc
 ./.functions
