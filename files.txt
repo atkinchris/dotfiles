@@ -1,0 +1,13 @@
+./.bashrc
+./.zshrc
+./.p10k.zsh
+./.iterm2/com.googlecode.iterm2.plist
+./.exports
+./.vimrc
+./.functions
+./.vscode/settings.json
+./.vscode/keybindings.json
+./.vscode/extensions.txt
+./.bash_profile
+./.gitconfig
+./.aliases
