@@ -1,2 +1,0 @@
-bootstrap:
-	sh ./bootstrap.sh
