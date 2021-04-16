@@ -34,7 +34,7 @@ map <silent> <C-n> :NERDTreeToggle<CR>
 map <silent> <S-n> :GFiles<CR>
 map <C-a> <esc>ggVG<CR>
 
-colorscheme monokai
+colorscheme Monokai
 
 let g:seiya_auto_enable=1
 
