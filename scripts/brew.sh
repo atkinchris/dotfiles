@@ -22,7 +22,7 @@ brew install \
   zsh zsh-completions
 
 brew tap homebrew/cask-fonts
-brew cask install \
+brew install --cask \
   font-hack-nerd-font \
   font-hasklig \
   font-menlo-for-powerline \
