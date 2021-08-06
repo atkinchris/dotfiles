@@ -24,6 +24,16 @@ brew install \
   wget \
   zsh zsh-completions
 
+# Install work tools
+brew install \
+  awscli \
+  jq \
+  kubernetes-cli \
+  k9s \
+  kubectx \
+  aws-iam-authenticator \
+  terraform
+
 # Tap and install fonts
 brew tap homebrew/cask-fonts
 brew install --cask \
