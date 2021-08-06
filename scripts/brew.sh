@@ -30,6 +30,12 @@ brew install --cask \
 
 brew cleanup
 
+cd `mktemp -d`
+git clone https://github.com/kencrocken/FiraCodeiScript.git .
+cp *.ttf /Library/Fonts
+cd -
+
+
 mkdir -p ~/.iterm2
 cp ./.iterm2/com.googlecode.iterm2.plist ~/.iterm2/
 defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.iterm2"
