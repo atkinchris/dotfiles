@@ -15,7 +15,6 @@ brew install \
   git-lfs \
   highlight \
   ranger \
-  rtv \
   the_silver_searcher \
   tree \
   vim \
