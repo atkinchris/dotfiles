@@ -4,6 +4,8 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
+Plugin 'VundleVim/Vundle.vim'
+
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'flazz/vim-colorschemes'
@@ -17,7 +19,6 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'townk/vim-autoclose'
 Plugin 'vim-airline/vim-airline'
-Plugin 'VundleVim/Vundle.vim'
 Plugin 'w0rp/ale'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 
