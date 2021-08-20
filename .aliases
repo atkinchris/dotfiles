@@ -14,6 +14,7 @@ alias sha256="shasum -a 256"
 # Architecture shortcuts
 alias archx64="arch -x86_64 zsh"
 alias whicharch="echo 'OS:' && uname -p && echo 'node:' && node -p process.arch"
+alias brow='arch --x86_64 /usr/local/Homebrew/bin/brew'
 
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
