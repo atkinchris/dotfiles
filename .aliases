@@ -11,6 +11,8 @@ alias g="git"
 alias commit="git commit -am"
 alias sha256="shasum -a 256"
 
+alias withcode="EDITOR='code -w'"
+
 # Architecture shortcuts
 alias archx64="arch -x86_64 zsh"
 alias whicharch="echo 'OS:' && uname -p && echo 'node:' && node -p process.arch"
