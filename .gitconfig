@@ -7,6 +7,7 @@
 	email = atkinchris@gmail.com
 [push]
 	default = simple
+	followTags = true
 [alias]
 	# Add all files and check status
 	aa = !git add -u && git add . && git status -s
