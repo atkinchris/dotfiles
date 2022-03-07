@@ -122,7 +122,7 @@ compose () {
 	docker-compose kill
 	docker-compose rm -vf
 	docker-compose build
-	docker-compose up --remove-orphans
+  docker-compose up --remove-orphans $@
 }
 
 # Send a command to a device and cat the output
