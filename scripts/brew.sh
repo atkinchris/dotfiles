@@ -12,6 +12,7 @@ brew upgrade
 
 # Install basic tools
 brew install \
+  autojump \
   coreutils \
   fzf \
   git \

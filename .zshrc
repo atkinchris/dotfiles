@@ -10,7 +10,7 @@ export ZSH=~/.oh-my-zsh
 
 DEFAULT_USER=$(whoami)
 ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(git)
+plugins=(git autojump)
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 [ -f $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh
 
