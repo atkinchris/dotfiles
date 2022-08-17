@@ -24,16 +24,12 @@ If you've updated your local copies of these files in your home directory, and w
 rsync -avr --no-perms --files-from=files.txt ~ .
 ```
 
-## VS Code
+## Useful Tips
 
-Visual Studio Code settings are no longer copied automatically, as these are maintained with the sync settings plugin. However, local copies are included here for archiving purposes.
+### Copying files from another computer
 
-To copy them to the local system, use:
+If you have access to another system over SSH (such as a Mac with "Remote Login" enabled), you can copy files and folders from the remote system to your local with the following command. This will recursively bring over any files and folders specified, excluding files which would, within a folder, have been ignored by that folder's `.gitignore` file.
 
 ```sh
-# Linux
-rsync -avr --no-perms ./vscode/ $HOME/.config/Code/User/
-
-# macOS
-rsync -avr --no-perms ./vscode/ "$HOME/Library/Application Support/Code/User/"
+rsync -avr --no-perms --filter=':- .gitignore' remote-system:~/<PATH>/ ~/<PATH>
 ```
