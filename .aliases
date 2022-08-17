@@ -14,7 +14,7 @@ alias sha256="shasum -a 256"
 alias withcode="EDITOR='code -w'"
 
 # Architecture shortcuts
-alias archx64="arch -x86_64 zsh"
+alias archx64="arch -x86_64 /bin/zsh"
 alias whicharch="echo 'OS:' && uname -p && echo 'node:' && node -p process.arch"
 alias brow='arch --x86_64 /usr/local/Homebrew/bin/brew'
 
