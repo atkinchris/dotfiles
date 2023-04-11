@@ -8,6 +8,7 @@
 [push]
 	default = simple
 	followTags = true
+	autoSetupRemote = true
 [alias]
 	# Add all files and check status
 	aa = !git add -u && git add . && git status -s
