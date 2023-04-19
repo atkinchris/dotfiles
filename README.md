@@ -33,3 +33,18 @@ If you have access to another system over SSH (such as a Mac with "Remote Login"
 ```sh
 rsync -avr --no-perms --filter=':- .gitignore' remote-system:~/<PATH>/ ~/<PATH>
 ```
+
+### Brew
+
+These dotfiles are primarily used on a Mac, with [Homebrew](https://brew.sh). To install supporting tools and CLIs from `brew`, a [`Brewfile`](https://gist.github.com/ChristopherA/a579274536aab36ea9966f301ff14f3f) is provided.
+
+Note: items in the `Brewfile` are installed as part of `./scripts/brew.sh`.
+
+```sh
+# Install applications from Homebrew
+brew bundle install --file=Brewfile
+
+# Backup a list of installed applications to the Brewfile
+# This needs --force to overwrite the current Brewfile
+brew bundle dump --file=Brewfile --force
+```

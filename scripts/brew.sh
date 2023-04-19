@@ -11,38 +11,8 @@ fi
 brew update
 brew upgrade
 
-# Install basic tools
-brew install \
-  autojump \
-  coreutils \
-  fzf \
-  git \
-  git-lfs \
-  highlight \
-  ranger \
-  the_silver_searcher \
-  tree \
-  vim \
-  wget \
-  zsh zsh-completions
-
-# Install work tools
-brew install \
-  awscli \
-  jq \
-  kubernetes-cli \
-  k9s \
-  kubectx \
-  aws-iam-authenticator \
-  terraform
-
-# Tap and install fonts
-brew tap homebrew/cask-fonts
-brew install --cask \
-  font-hack-nerd-font \
-  font-hasklig \
-  font-menlo-for-powerline \
-  font-meslo-for-powerline
+# Install brew packages from Brewfile
+brew bundle install --file=Brewfile
 
 # Housekeeping for brew
 brew cleanup
