@@ -21,6 +21,8 @@ Plugin 'townk/vim-autoclose'
 Plugin 'vim-airline/vim-airline'
 Plugin 'w0rp/ale'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'godlygeek/tabular'
+Plugin 'preservim/vim-markdown'
 
 call vundle#end()
 filetype plugin indent on
