@@ -10,7 +10,7 @@ alias dt="cd ~/Desktop"
 alias g="git"
 alias commit="git commit -am"
 alias sha256="shasum -a 256"
-alias t="nb tasks"
+alias t="nb tasks open"
 
 alias withcode="EDITOR='code -w'"
 
