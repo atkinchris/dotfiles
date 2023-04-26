@@ -20,12 +20,6 @@ brew cleanup
 # Setup git lfs
 git lfs install
 
-# Setup editor font
-cd `mktemp -d`
-git clone https://github.com/kencrocken/FiraCodeiScript.git .
-cp *.ttf /Library/Fonts
-cd -
-
 # Setup iTerm2 to use a preferences file
 mkdir -p ~/.iterm2
 cp ./.iterm2/com.googlecode.iterm2.plist ~/.iterm2/
