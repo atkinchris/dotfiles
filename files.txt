@@ -9,3 +9,4 @@
 ./.aliases
 ./.nbrc
 ./.iterm2
+./.hushlogin
