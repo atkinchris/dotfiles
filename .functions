@@ -144,8 +144,13 @@ test_github_scopes() {
 	curl -sS -f -I -H "Authorization: token $1" https://api.github.com | grep ^x-oauth-scopes: | cut -d' ' -f2- | tr -d "[:space:]"
 }
 
-# Encrypt stdin for a GitHub user with age
+# Encrypt stdin for a GitHub user or decrypt for self with age
 # https://github.com/FiloSottile/age
-github_encrypt() {
-	age -a -R <(curl -sS https://github.com/$1.keys)
+github_crypt() {
+	if [ -z "$1" ]
+	then
+		age -d -i <(op read op://Private/GitHub/'private key')
+	else
+		age -a -R <(curl -sS https://github.com/$1.keys)
+	fi
 }
