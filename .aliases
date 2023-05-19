@@ -18,13 +18,6 @@ alias withcode="EDITOR='code -w'"
 alias archx64="arch -x86_64 /bin/zsh"
 alias whicharch="echo 'OS:' && uname -p && echo 'node:' && node -p process.arch"
 
-# Tests for token validity
-test_github_scopes() {
-	PROMPT_EOL_MARK=''
-	curl -sS -H "Authorization: token $1" https://api.github.com/user | jq -r .login
-	curl -sS -f -I -H "Authorization: token $1" https://api.github.com | grep ^x-oauth-scopes: | cut -d' ' -f2- | tr -d "[:space:]"
-}
-
 # Detect which `ls` flavor is in use
 if ls --color > /dev/null 2>&1; then # GNU `ls`
 	colorflag="--color"

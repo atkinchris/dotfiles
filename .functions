@@ -136,3 +136,10 @@ send () {
 	echo -e "$@" > $DEVICE
 	fg
 }
+
+# Tests for token validity
+test_github_scopes() {
+	PROMPT_EOL_MARK=''
+	curl -sS -H "Authorization: token $1" https://api.github.com/user | jq -r .login
+	curl -sS -f -I -H "Authorization: token $1" https://api.github.com | grep ^x-oauth-scopes: | cut -d' ' -f2- | tr -d "[:space:]"
+}
