@@ -6,6 +6,7 @@
 ./.functions
 ./.bash_profile
 ./.gitconfig
+./.work.gitconfig
 ./.aliases
 ./.nbrc
 ./.iterm2

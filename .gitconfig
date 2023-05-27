@@ -2,6 +2,14 @@
 	name = Chris Atkin
 	email = atkinchris@gmail.com
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIETcJv+ba7N0RxYyzADAyB1MOu5WkgjM4FRBJpU5LHyB
+
+# Include a different Git config for work remotes
+# The first character of the name is removed, as there are different cases and prefixes between different Orgs.
+[includeIf "hasconfig:remote.*.url:git@github.com:*ainsbury*/**/*"]
+	path = .work.gitconfig
+[includeIf "hasconfig:remote.*.url:git@github.com:*ectar*/**/*"]
+	path = .work.gitconfig
+
 [push]
 	default = simple
 	followTags = true
