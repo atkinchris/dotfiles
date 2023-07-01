@@ -11,6 +11,7 @@ alias g="git"
 alias commit="git commit -am"
 alias sha256="shasum -a 256"
 alias t="nb tasks open"
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
 alias withcode="EDITOR='code -w'"
 
