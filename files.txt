@@ -12,3 +12,4 @@
 ./.iterm2
 ./.hushlogin
 ./.extra
+./.ssh/config
