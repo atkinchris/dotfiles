@@ -13,3 +13,4 @@
 ./.hushlogin
 ./.extra
 ./.ssh/config
+./.nvm/default-packages
