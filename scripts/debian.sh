@@ -3,6 +3,7 @@ set -eu
 
 sudo apt-get update
 sudo apt-get install -y \
+  autojump \
   curl \
   git \
   tree \
