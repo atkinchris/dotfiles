@@ -144,6 +144,18 @@ test_github_scopes() {
 	curl -sS -f -I -H "Authorization: token $1" https://api.github.com | grep ^x-oauth-scopes: | cut -d' ' -f2- | tr -d "[:space:]"
 }
 
+# Mirror and bundle a GitHub repository
+bundle_github() {
+	url=$1
+	output=$2
+
+  git clone --mirror $url
+  cd $(basename $url)
+  git bundle create ../$output.bundle --all
+  cd ..
+  rm -rf $(basename $url)
+}
+
 # Encrypt stdin for a GitHub user or decrypt for self with age
 # https://github.com/FiloSottile/age
 github_crypt() {
