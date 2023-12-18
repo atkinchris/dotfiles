@@ -45,7 +45,12 @@ function randomstr() {
 
 # Start an interactive Debian Docker container with the present directory mounted
 function debianhere() {
-	docker run -v $(pwd):/root/files -it debian /bin/bash
+	docker run -v $(pwd):/root/files -w /root/files -it debian /bin/bash
+}
+
+# Start an interactive Alpine Docker container with the present directory mounted
+function alpinehere() {
+	docker run -v $(pwd):/root/files -w /root/files -it alpine /bin/sh
 }
 
 # Start an interactive Docker container with the present directory mounted
