@@ -43,9 +43,9 @@ function randomstr() {
 	cat /dev/urandom | env LC_CTYPE=C tr -dc a-z | head -c 16; echo
 }
 
-# Start an interactive Ubuntu Docker container with the present directory mounted
-function ubuntuhere() {
-	docker run -v $(pwd):/root/files -it ubuntu /bin/bash
+# Start an interactive Debian Docker container with the present directory mounted
+function debianhere() {
+	docker run -v $(pwd):/root/files -it debian /bin/bash
 }
 
 # Start an interactive Docker container with the present directory mounted
