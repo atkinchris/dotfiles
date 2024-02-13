@@ -3,12 +3,12 @@ set -eu
 
 sudo apt-get update
 sudo apt-get install -y \
-  autojump \
   curl \
   git \
   tree \
   vim \
   wget \
+  zoxide \
   zsh
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"

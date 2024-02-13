@@ -8,14 +8,14 @@ fi
 export ZSH=~/.oh-my-zsh
 [ -n "$PS1" ] && source ~/.bash_profile
 
+# Load homebrew before oh-my-zsh, as some plugins are installed in brew paths
+[ -f /opt/homebrew/bin/brew ] && eval $(/opt/homebrew/bin/brew shellenv)
+
 DEFAULT_USER=$(whoami)
 ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(git autojump)
+plugins=(git zoxide)
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 [ -f $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh
-
-# load arm second, for high priority
-[ -f /opt/homebrew/bin/brew ] && eval $(/opt/homebrew/bin/brew shellenv)
 
 # Load fzf for history searching and set it to unique commands only
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
