@@ -5,6 +5,9 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Disable pattern errors in ZSH, and use patterns as-is
+setopt NO_NOMATCH
+
 export ZSH=~/.oh-my-zsh
 [ -n "$PS1" ] && source ~/.bash_profile
 
