@@ -8,6 +8,8 @@
 	<string>gpt-3.5-turbo</string>
 	<key>AlternateMouseScroll</key>
 	<true/>
+	<key>ClickToSelectCommand</key>
+	<false/>
 	<key>Default Bookmark Guid</key>
 	<string>D6F5F550-499F-4C21-8D3A-E5445C7CC022</string>
 	<key>HapticFeedbackForEsc</key>
