@@ -18,7 +18,7 @@ DEFAULT_USER=$(whoami)
 ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(git zoxide)
 export GOPATH=$HOME/go
-export PATH="$GOPATH/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+export PATH="$GOPATH/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 [ -f $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh
 
 # Load fzf for history searching and set it to unique commands only
