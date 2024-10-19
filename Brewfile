@@ -45,7 +45,6 @@ brew "zoxide"
 brew "zsh"
 brew "zsh-completions"
 brew "zx"
-brew "hashicorp/tap/terraform"
 brew "trufflesecurity/trufflehog/trufflehog", link: false
 brew "warrensbox/tap/tfswitch"
 brew "xwmx/taps/nb"
