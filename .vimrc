@@ -58,6 +58,6 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-au BufReadCmd *.pak call zip#Browse(expand("<amatch>"))
+au BufReadCmd *.pak, *.xpi call zip#Browse(expand("<amatch>"))
 
 syntax on
