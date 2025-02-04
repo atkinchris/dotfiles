@@ -169,3 +169,9 @@ github_crypt() {
 		age -a -R <(curl -sS https://github.com/$1.keys)
 	fi
 }
+
+# Run a Python script with UV
+# https://github.com/astral-sh/uv/issues/8432#issuecomment-2449749852
+py() {
+  uv run $1
+}
