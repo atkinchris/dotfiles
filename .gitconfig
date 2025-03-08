@@ -1,6 +1,6 @@
 [user]
 	name = Chris Atkin
-	email = atkinchris@gmail.com
+	email = github@chrisatkin.co.uk
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIETcJv+ba7N0RxYyzADAyB1MOu5WkgjM4FRBJpU5LHyB
 
 # Include a different Git config for work remotes
