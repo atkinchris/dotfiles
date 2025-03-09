@@ -7,7 +7,6 @@
 ./.gitconfig
 ./.work.gitconfig
 ./.aliases
-./.nbrc
 ./.iterm2
 ./.hushlogin
 ./.extra
