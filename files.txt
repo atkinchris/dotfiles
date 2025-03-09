@@ -15,4 +15,3 @@
 ./.ssh/config
 ./.nvm/default-packages
 ./.aws/config
-./.kube/config
