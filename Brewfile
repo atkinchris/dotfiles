@@ -50,7 +50,6 @@ brew "zsh-completions"
 brew "zx"
 brew "trufflesecurity/trufflehog/trufflehog", link: false
 brew "warrensbox/tap/tfswitch"
-brew "xwmx/taps/nb"
 cask "1password-cli"
 cask "android-platform-tools"
 cask "bruno"
