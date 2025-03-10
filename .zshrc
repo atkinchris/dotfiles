@@ -37,7 +37,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -x "$(command -v gh)" ] && eval "$(gh copilot alias -- zsh)" # Enable GitHub Copilot CLI aliases
 
 # Disable the pager for GitHub CLI so responses are returned immediately
-export GH_PAGER =
+export GH_PAGER=
 
 # Enable AWS SDK to load the config from the ~/.aws/config file
-export AWS_SDK_LOAD_CONFIG = "true"
+export AWS_SDK_LOAD_CONFIG="true"
