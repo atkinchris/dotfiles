@@ -175,3 +175,47 @@ github_crypt() {
 py() {
   uv run $1
 }
+
+# Archive a GitHub repository
+# $ gh_archive sainsburys-tech discoverability-org-viz
+gh_archive() {
+  org=$1
+  repo=$2
+  gh repo archive -y $org/$repo
+}
+
+# Delete a GitHub repository
+# $ gh_delete sainsburys-tech jp-pd
+gh_delete() {
+  org=$1
+  repo=$2
+  gh repo delete --yes $org/$repo
+}
+
+# Add a team to a GitHub repository
+# $ gh_add_team JSainsburyPLC cvu-argos-similar-products-aspire gdp-orange-admin admin
+gh_add_team() {
+  org=$1
+	repo=$2
+	team_slug=$3
+  permission=$4
+
+  gh api \
+    --method PUT \
+    "/orgs/$org/teams/$team_slug/repos/$org/$repo" \
+    -f permission="$permission"
+}
+
+# Add a collaborator to a GitHub repository
+# $ gh_add_collaborator JSainsburyPLC tu-bastion-infra evaj03 admin
+gh_add_collaborator() {
+  org=$1
+  repo=$2
+  collaborator=$3
+  permission=$4
+
+  gh api \
+    --method PUT \
+    "/repos/$org/$repo/collaborators/$collaborator" \
+    -f permission="$permission"
+}
