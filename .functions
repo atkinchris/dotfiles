@@ -219,3 +219,29 @@ gh_add_collaborator() {
     "/repos/$org/$repo/collaborators/$collaborator" \
     -f permission="$permission"
 }
+
+# Remove a user from a GitHub enterprise
+# $ gh_remove_user j-sainsbury-plc evaj03
+gh_remove_user() {
+  enterprise=$1
+  user=$2
+
+  # Get the user ID
+  user_id=$(gh api graphql -f query='query($login: String!) { user(login:$login) { id } }' -F login=$user | jq -r '.data.user.id')
+
+  # Get the enterprise ID
+  enterprise_id=$(gh api graphql -f query='query($slug: String!) { enterprise(slug: $slug) { id } }' -F slug=$enterprise | jq -r '.data.enterprise.id')
+
+  gh api graphql \
+    -F enterprise=$enterprise_id \
+    -F user=$user_id \
+    -f query='
+mutation($enterprise:ID!, $user:ID!) {
+  removeEnterpriseMember(
+    input: {enterpriseId: $enterprise, userId: $user}
+  ) {
+    clientMutationId
+  }
+}
+'
+}
