@@ -60,7 +60,7 @@ function alpinehere() {
 
 # Build and run the Dockerfile at the current directory
 function dockerhere() {
-	TAG=$(openssl rand -hex 12)
+	local TAG=$(openssl rand -hex 12)
 	DOCKER_CLI_HINTS=false docker build -qt $TAG . && dkr $TAG
 }
 
@@ -72,7 +72,7 @@ function tfapply() {
 # Dedupe zsh history
 function dedupHistory() {
 	cp ~/.zsh_history{,-old}
-	tmpFile=`mktemp`
+	local tmpFile=$(mktemp)
 	awk -F ";" '!seen[$2]++' ~/.zsh_history > $tmpFile
 	mv $tmpFile ~/.zsh_history
 }
@@ -90,14 +90,14 @@ function listHomebrew() {
 }
 
 # List all Agents and Daemons
-launchctlAll () {
+function launchctlAll() {
 	/usr/bin/sudo launchctl list; launchctl list
 }
 
 # Find launchctl Agents and Daemons
 # https://stackoverflow.com/questions/18502705/how-to-know-a-specific-launchd-plist-file-location
-launchctlFind () {
-    LaunchctlPATHS=( \
+function launchctlFind() {
+    local LaunchctlPATHS=( \
         ~/Library/LaunchAgents \
         /Library/LaunchAgents \
         /Library/LaunchDaemons \
@@ -105,7 +105,7 @@ launchctlFind () {
         /System/Library/LaunchDaemons \
     )
 
-    for curPATH in "${LaunchctlPATHS[@]}"
+    for local curPATH in "${LaunchctlPATHS[@]}"
     do
         grep -R "$curPATH" -e "$1"
     done
@@ -113,8 +113,8 @@ launchctlFind () {
 }
 
 # Run Docker Compose file in local directory
-compose () {
-	function on_exit {
+function compose() {
+	function on_exit() {
 		docker-compose stop
 		docker-compose kill
 		docker-compose rm -vf
@@ -129,9 +129,9 @@ compose () {
 }
 
 # Send a command to a device and cat the output
-send () {
-	DEVICE=$1; shift
-	BAUD=$1; shift
+function send() {
+	local DEVICE=$1; shift
+	local BAUD=$1; shift
 
 	cat $DEVICE &
 	stty -f $DEVICE $BAUD
@@ -141,16 +141,15 @@ send () {
 }
 
 # Tests for token validity
-test_github_scopes() {
-	PROMPT_EOL_MARK=''
+function test_github_scopes() {
 	curl -sS -H "Authorization: token $1" https://api.github.com/user | jq -r .login
 	curl -sS -f -I -H "Authorization: token $1" https://api.github.com | grep ^x-oauth-scopes: | cut -d' ' -f2- | tr -d "[:space:]"
 }
 
 # Mirror and bundle a GitHub repository
-bundle_github() {
-	url=$1
-	output=$2
+function bundle_github() {
+	local url=$1
+	local output=$2
 
   git clone --mirror $url
   cd $(basename $url)
@@ -161,7 +160,7 @@ bundle_github() {
 
 # Encrypt stdin for a GitHub user or decrypt for self with age
 # https://github.com/FiloSottile/age
-github_crypt() {
+function github_crypt() {
 	if [ -z "$1" ]
 	then
 		age -d -i <(op read op://Private/GitHub/'private key')
@@ -172,33 +171,33 @@ github_crypt() {
 
 # Run a Python script with UV
 # https://github.com/astral-sh/uv/issues/8432#issuecomment-2449749852
-py() {
+function py() {
   uv run $1
 }
 
 # Archive a GitHub repository
 # $ gh_archive sainsburys-tech discoverability-org-viz
-gh_archive() {
-  org=$1
-  repo=$2
+function gh_archive() {
+  local org=$1
+  local repo=$2
   gh repo archive -y $org/$repo
 }
 
 # Delete a GitHub repository
 # $ gh_delete sainsburys-tech jp-pd
-gh_delete() {
-  org=$1
-  repo=$2
+function gh_delete() {
+  local org=$1
+  local repo=$2
   gh repo delete --yes $org/$repo
 }
 
 # Add a team to a GitHub repository
 # $ gh_add_team JSainsburyPLC cvu-argos-similar-products-aspire gdp-orange-admin admin
-gh_add_team() {
-  org=$1
-	repo=$2
-	team_slug=$3
-  permission=$4
+function gh_add_team() {
+  local org=$1
+	local repo=$2
+	local team_slug=$3
+  local permission=$4
 
   gh api \
     --method PUT \
@@ -208,11 +207,11 @@ gh_add_team() {
 
 # Add a collaborator to a GitHub repository
 # $ gh_add_collaborator JSainsburyPLC tu-bastion-infra evaj03 admin
-gh_add_collaborator() {
-  org=$1
-  repo=$2
-  collaborator=$3
-  permission=$4
+function gh_add_collaborator() {
+  local org=$1
+  local repo=$2
+  local collaborator=$3
+  local permission=$4
 
   gh api \
     --method PUT \
@@ -222,15 +221,15 @@ gh_add_collaborator() {
 
 # Remove a user from a GitHub enterprise
 # $ gh_remove_user j-sainsbury-plc evaj03
-gh_remove_user() {
-  enterprise=$1
-  user=$2
+function gh_remove_user() {
+  local enterprise=$1
+  local user=$2
 
   # Get the user ID
-  user_id=$(gh api graphql -f query='query($login: String!) { user(login:$login) { id } }' -F login=$user | jq -r '.data.user.id')
+  local user_id=$(gh api graphql -f query='query($login: String!) { user(login:$login) { id } }' -F login=$user | jq -r '.data.user.id')
 
   # Get the enterprise ID
-  enterprise_id=$(gh api graphql -f query='query($slug: String!) { enterprise(slug: $slug) { id } }' -F slug=$enterprise | jq -r '.data.enterprise.id')
+  local enterprise_id=$(gh api graphql -f query='query($slug: String!) { enterprise(slug: $slug) { id } }' -F slug=$enterprise | jq -r '.data.enterprise.id')
 
   gh api graphql \
     -F enterprise=$enterprise_id \
