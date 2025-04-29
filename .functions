@@ -33,9 +33,10 @@ function createapp() {
 
 # Clean Docker containers, images and volumes
 function dockerclean() {
-	docker rm $(docker ps -a -q)
-	docker rmi $(docker images -q)
-	docker volume rm $(docker volume ls -qf dangling=true)
+	# -a: remove all unused images not just dangling ones
+	# -f: do not prompt for confirmation
+	# --volumes: prune volumes
+	docker system prune -af --volumes
 }
 
 # Generate a random string
@@ -150,12 +151,13 @@ function test_github_scopes() {
 function bundle_github() {
 	local url=$1
 	local output=$2
+	local repo_dir=$(basename $url)
 
-  git clone --mirror $url
-  cd $(basename $url)
-  git bundle create ../$output.bundle --all
-  cd ..
-  rm -rf $(basename $url)
+  git clone --mirror $url || return 1
+  cd "$repo_dir" || return 1
+  git bundle create "../$output.bundle" --all || { cd ..; rm -rf "$repo_dir"; return 1; }
+  cd .. || return 1 # Should generally succeed, but good practice
+  rm -rf "$repo_dir"
 }
 
 # Encrypt stdin for a GitHub user or decrypt for self with age
