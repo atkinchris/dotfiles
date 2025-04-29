@@ -245,3 +245,17 @@ mutation($enterprise:ID!, $user:ID!) {
 }
 '
 }
+
+# App a repo to a GitHub app installation
+# $ gh_app_add 1234567890 JSainsburyPLC tu-bastion-infra
+function gh_app_add() {
+  local installationId=$1
+  local org=$2
+  local repo=$3
+
+  local repoId=$(gh api /repos/$org/$repo | jq -r .id)
+
+  echo "Adding $repo to $org with installationId $installationId and repoId $repoId"
+
+  gh api -X PUT /user/installations/$installationId/repositories/$repoId
+}
