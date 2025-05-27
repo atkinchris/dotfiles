@@ -21,6 +21,9 @@ export GOPATH=$HOME/go
 export PATH="$GOPATH/bin:$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 [ -f $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh
 
+# Disable extended history to avoid storing timestamps in the history file
+unsetopt extended_history
+
 # Load fzf for history searching and set it to unique commands only
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
