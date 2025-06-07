@@ -41,3 +41,7 @@ export GH_PAGER=
 
 # Enable AWS SDK to load the config from the ~/.aws/config file
 export AWS_SDK_LOAD_CONFIG="true"
+
+# Enable Atuin shell history management
+. "$HOME/.atuin/bin/env"
+eval "$(atuin init zsh)"
