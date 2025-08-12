@@ -43,6 +43,7 @@ brew "zoxide"
 brew "zsh"
 brew "zsh-completions"
 brew "zx"
+brew "hashicorp/tap/vault"
 brew "trufflesecurity/trufflehog/trufflehog", link: false
 brew "warrensbox/tap/tfswitch"
 cask "1password-cli"
