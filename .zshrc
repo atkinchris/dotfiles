@@ -48,3 +48,6 @@ export AWS_SDK_LOAD_CONFIG="true"
 # Enable Atuin shell history management
 . "$HOME/.atuin/bin/env"
 eval "$(atuin init zsh)"
+
+# Load 1Password CLI plugins if available
+[ -f ~/.config/op/plugins.sh ] && source ~/.config/op/plugins.sh
