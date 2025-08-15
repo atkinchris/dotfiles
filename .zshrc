@@ -34,13 +34,9 @@ fi
 [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
 [[ -f /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
 
-# Load NVM (Node Version Manager)
-export NVM_DIR="$HOME/.nvm"
-if [[ -s "$NVM_DIR/nvm.sh" ]]; then
-    source "$NVM_DIR/nvm.sh"
-    # Load nvm bash completion if available
-    [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
-fi
+# Load NVM (Node Version Manager) using zsh-nvm plugin and enable lazy loading
+export NVM_LAZY_LOAD=true
+[[ -f ~/.zsh-nvm/zsh-nvm.plugin.zsh ]] && source ~/.zsh-nvm/zsh-nvm.plugin.zsh
 
 # Enable GitHub Copilot CLI aliases
 if command -v gh >/dev/null 2>&1; then

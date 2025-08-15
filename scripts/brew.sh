@@ -28,6 +28,7 @@ defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
 
 # Setup terminal tools, like nvm
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+git clone https://github.com/lukechilds/zsh-nvm.git ~/.zsh-nvm
 
 # Install vim plugins
 # Don't forget to run
