@@ -1,3 +1,9 @@
+# Optionally enable ZSH profiling for debugging
+# time ZSH_DEBUGRC=1 zsh -i -c exit
+if [[ -n "$ZSH_DEBUGRC" ]]; then
+  zmodload zsh/zprof
+fi
+
 # Disable pattern errors in ZSH, and use patterns as-is
 setopt NO_NOMATCH
 
@@ -65,3 +71,8 @@ fi
 
 # Load 1Password CLI plugins if available
 [[ -f ~/.config/op/plugins.sh ]] && source ~/.config/op/plugins.sh
+
+# Optionally enable ZSH profiling for debugging
+if [[ -n "$ZSH_DEBUGRC" ]]; then
+  zprof
+fi
