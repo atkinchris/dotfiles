@@ -30,4 +30,7 @@ fi
 alias l="eza -l --icons --git -a --no-user --group-directories-first"
 
 # List only directories
-alias ld="eza -l --icons --git -a --no-user --only-dirs"
+alias ld="l --only-dirs"
+
+# List files in a tree format
+alias lt="l --tree --level=2"
