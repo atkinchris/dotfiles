@@ -1,0 +1,10 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Don't inserts a blank line between shell prompts
+add_newline = false
+
+# Disable the line break module, hiding it from the prompt completely
+# This prevents the prompt from inserting a line break after each command
+[line_break]
+disabled = true
