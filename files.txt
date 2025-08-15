@@ -1,6 +1,5 @@
 ./.bashrc
 ./.zshrc
-./.p10k.zsh
 ./.vimrc
 ./.functions
 ./.bash_profile
