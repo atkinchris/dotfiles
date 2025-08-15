@@ -9,7 +9,6 @@ fi
 setopt NO_NOMATCH
 
 export ZSH=~/.oh-my-zsh
-[ -n "$PS1" ] && source ~/.bash_profile
 
 # Load homebrew before oh-my-zsh, as some plugins are installed in brew paths
 [ -f /opt/homebrew/bin/brew ] && eval $(/opt/homebrew/bin/brew shellenv)
@@ -20,6 +19,10 @@ plugins=(git zoxide)
 export GOPATH=$HOME/go
 export PATH="$GOPATH/bin:$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 [ -f $ZSH/oh-my-zsh.sh ] && source $ZSH/oh-my-zsh.sh
+
+# Load custom aliases and functions
+# This must be run after oh-my-zsh is loaded to ensure it overrides existing aliases
+[ -n "$PS1" ] && source ~/.bash_profile
 
 # Load fzf for history searching and set it to unique commands only
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
