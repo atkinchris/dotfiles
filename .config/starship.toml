@@ -8,3 +8,19 @@ add_newline = false
 # This prevents the prompt from inserting a line break after each command
 [line_break]
 disabled = true
+
+# Configure the git status module to show status counts, like p10k does
+[git_status]
+format = '([\[$staged$modified$untracked$conflicted$deleted$renamed$stashed$ahead_behind\]]($style) )'
+conflicted = "$count"
+ahead = "⇡$count"
+behind = "⇣$count"
+diverged = "⇕$count"
+up_to_date = ""
+untracked = "?$count"
+stashed = "$count"
+modified = "!$count"
+staged = "+$count"
+renamed = "»$count"
+deleted = "✘$count"
+style = "bold yellow"
