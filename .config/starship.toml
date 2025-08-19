@@ -24,3 +24,9 @@ staged = "+$count"
 renamed = "»$count"
 deleted = "✘$count"
 style = "bold yellow"
+
+[nodejs]
+format = '[$symbol]($style)'
+
+[python]
+format = '[$symbol]($style)'
