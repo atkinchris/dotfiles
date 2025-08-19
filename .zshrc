@@ -29,6 +29,17 @@ if [[ "$TERM_PROGRAM" != "vscode" ]] && [[ -n "$PS1" ]]; then
     unset file
 fi
 
+# Load ZSH autocompletion
+[[ -f /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh ]] && source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
+# Make Tab and ShiftTab go to the menu
+bindkey              '^I' menu-select
+bindkey "$terminfo[kcbt]" menu-select
+
+# Make Tab and ShiftTab change the selection in the menu
+bindkey -M menuselect              '^I'         menu-complete
+bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
+
 # Load fzf for history searching
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
