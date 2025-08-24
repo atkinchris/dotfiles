@@ -30,3 +30,6 @@ format = '[$symbol]($style)'
 
 [python]
 format = '[$symbol]($style)'
+
+[package]
+disabled = true
