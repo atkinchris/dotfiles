@@ -11,7 +11,7 @@ disabled = true
 
 # Configure the git status module to show status counts, like p10k does
 [git_status]
-format = '([\[$staged$modified$untracked$conflicted$deleted$renamed$stashed$ahead_behind\]]($style) )'
+format = '([$staged$modified$untracked$conflicted$deleted$renamed$stashed$ahead_behind]($style) )'
 conflicted = "$count"
 ahead = "⇡$count"
 behind = "⇣$count"
