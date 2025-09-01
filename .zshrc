@@ -4,6 +4,13 @@ if [[ -n "$ZSH_DEBUGRC" ]]; then
   zmodload zsh/zprof
 fi
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Disable pattern errors in ZSH, and use patterns as-is
 setopt NO_NOMATCH
 
@@ -13,6 +20,20 @@ setopt HIST_IGNORE_ALL_DUPS
 # Load homebrew early, as some plugins are installed in brew paths
 if [[ -f /opt/homebrew/bin/brew ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Oh My Zsh configuration
+export ZSH=~/.oh-my-zsh
+ZSH_THEME="powerlevel10k/powerlevel10k"
+plugins=(git zoxide)
+
+if [[ -r "$ZSH/oh-my-zsh.sh" ]]; then
+    source "$ZSH/oh-my-zsh.sh"
+fi
+
+# Load Powerlevel10k configuration
+if [[ -r ~/.p10k.zsh ]]; then
+    source ~/.p10k.zsh
 fi
 
 # Set up PATH with proper ordering (most specific first)
@@ -59,16 +80,6 @@ export GH_PAGER=
 
 # Enable AWS SDK to load the config from the ~/.aws/config file
 export AWS_SDK_LOAD_CONFIG=1
-
-# Enable zoxide for quick directory navigation
-if command -v zoxide >/dev/null 2>&1; then
-    eval "$(zoxide init zsh)"
-fi
-
-# Initialize Starship prompt
-if command -v starship >/dev/null 2>&1; then
-    eval "$(starship init zsh)"
-fi
 
 # Enable Atuin shell history management
 if [[ -f "$HOME/.atuin/bin/env" ]]; then
