@@ -27,14 +27,11 @@ export ZSH=~/.oh-my-zsh
 ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(git zoxide)
 
-if [[ -r "$ZSH/oh-my-zsh.sh" ]]; then
-    source "$ZSH/oh-my-zsh.sh"
-fi
+# Load Oh My Zsh
+[[ -r "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
 
 # Load Powerlevel10k configuration
-if [[ -r ~/.p10k.zsh ]]; then
-    source ~/.p10k.zsh
-fi
+[[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
 # Set up PATH with proper ordering (most specific first)
 export PATH="$HOME/.local/bin:$HOME/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
