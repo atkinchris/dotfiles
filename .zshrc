@@ -22,10 +22,13 @@ if [[ -f /opt/homebrew/bin/brew ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
+# Load NVM (Node Version Manager) using zsh-nvm plugin and enable lazy loading
+export NVM_LAZY_LOAD=true
+
 # Oh My Zsh configuration
 export ZSH=~/.oh-my-zsh
 ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(git zoxide)
+plugins=(git zoxide zsh-nvm zsh-autocomplete)
 
 # Load Oh My Zsh
 [[ -r "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
@@ -47,9 +50,6 @@ if [[ "$TERM_PROGRAM" != "vscode" ]] && [[ -n "$PS1" ]]; then
     unset file
 fi
 
-# Load ZSH autocompletion
-[[ -f /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh ]] && source /opt/homebrew/share/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-
 # Make Tab and ShiftTab go to the menu
 bindkey              '^I' menu-select
 bindkey "$terminfo[kcbt]" menu-select
@@ -62,10 +62,6 @@ bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
 [[ -f /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
-
-# Load NVM (Node Version Manager) using zsh-nvm plugin and enable lazy loading
-export NVM_LAZY_LOAD=true
-[[ -f ~/.zsh-nvm/zsh-nvm.plugin.zsh ]] && source ~/.zsh-nvm/zsh-nvm.plugin.zsh
 
 # Enable GitHub Copilot CLI aliases
 if command -v gh >/dev/null 2>&1; then
