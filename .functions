@@ -1,3 +1,7 @@
+# =============================================================================
+# EDITOR & FILE OPERATIONS
+# =============================================================================
+
 # `a` with no arguments opens the current directory in VS Code Editor, otherwise
 # opens the given location
 function a() {
@@ -23,13 +27,9 @@ function mkd() {
 	mkdir -p "$@" && cd "$_"
 }
 
-# Create a new bootstrapped application
-function createapp() {
-	git clone https://github.com/atkinchris/application-bootstrap.git "$@" && \
-	cd "$_" && \
-	rm -rf .git && \
-	git init
-}
+# =============================================================================
+# DOCKER UTILITIES
+# =============================================================================
 
 # Clean Docker containers, images and volumes
 function dockerclean() {
@@ -37,11 +37,6 @@ function dockerclean() {
 	# -f: do not prompt for confirmation
 	# --volumes: prune volumes
 	docker system prune -af --volumes
-}
-
-# Generate a random string
-function randomstr() {
-	cat /dev/urandom | env LC_CTYPE=C tr -dc a-z | head -c 16; echo
 }
 
 # Start an interactive Docker container with the present directory mounted
@@ -65,9 +60,29 @@ function dockerhere() {
 	DOCKER_CLI_HINTS=false docker build -qt $TAG . && dkr $TAG
 }
 
-# Change to Terraform workspace and apply config
-function tfapply() {
-	terraform workspace select "$@" && terraform apply -var-file=workspaces/$@.tfvars
+# Run Docker Compose file in local directory
+function compose() {
+	function on_exit() {
+		docker-compose stop
+		docker-compose kill
+		docker-compose rm -vf
+	}
+
+	trap on_exit EXIT
+
+	docker-compose kill
+	docker-compose rm -vf
+	docker-compose build
+  docker-compose up --remove-orphans $@
+}
+
+# =============================================================================
+# SYSTEM UTILITIES
+# =============================================================================
+
+# Generate a random string
+function randomstr() {
+	cat /dev/urandom | env LC_CTYPE=C tr -dc a-z | head -c 16; echo
 }
 
 # Dedupe zsh history
@@ -84,6 +99,23 @@ function restartWifi() {
 	networksetup -setairportpower airport on
 }
 
+# Send a command to a device and cat the output
+# Usage: send <device> <baud_rate> <command>
+function send() {
+	local DEVICE=$1; shift
+	local BAUD=$1; shift
+
+	cat $DEVICE &
+	stty -f $DEVICE $BAUD
+
+	echo -e "$@" > $DEVICE
+	fg
+}
+
+# =============================================================================
+# MACOS SYSTEM MANAGEMENT
+# =============================================================================
+
 # List all Homebrew packages and the reasons they're installed
 # https://www.thingy-ma-jig.co.uk/blog/22-09-2014/homebrew-list-packages-and-what-uses-them
 function listHomebrew() {
@@ -96,6 +128,7 @@ function launchctlAll() {
 }
 
 # Find launchctl Agents and Daemons
+# Usage: launchctlFind <search_term>
 # https://stackoverflow.com/questions/18502705/how-to-know-a-specific-launchd-plist-file-location
 function launchctlFind() {
     local LaunchctlPATHS=( \
@@ -113,41 +146,19 @@ function launchctlFind() {
     return 0;
 }
 
-# Run Docker Compose file in local directory
-function compose() {
-	function on_exit() {
-		docker-compose stop
-		docker-compose kill
-		docker-compose rm -vf
-	}
-
-	trap on_exit EXIT
-
-	docker-compose kill
-	docker-compose rm -vf
-	docker-compose build
-  docker-compose up --remove-orphans $@
-}
-
-# Send a command to a device and cat the output
-function send() {
-	local DEVICE=$1; shift
-	local BAUD=$1; shift
-
-	cat $DEVICE &
-	stty -f $DEVICE $BAUD
-
-	echo -e "$@" > $DEVICE
-	fg
-}
+# =============================================================================
+# GITHUB ADMINISTRATION
+# =============================================================================
 
 # Tests for token validity
+# Usage: test_github_scopes <token>
 function test_github_scopes() {
 	curl -sS -H "Authorization: token $1" https://api.github.com/user | jq -r .login
 	curl -sS -f -I -H "Authorization: token $1" https://api.github.com | grep ^x-oauth-scopes: | cut -d' ' -f2- | tr -d "[:space:]"
 }
 
 # Mirror and bundle a GitHub repository
+# Usage: bundle_github <repo_url> <output_name>
 function bundle_github() {
 	local url=$1
 	local output=$2
@@ -161,6 +172,8 @@ function bundle_github() {
 }
 
 # Encrypt stdin for a GitHub user or decrypt for self with age
+# Usage: echo "secret" | github_crypt <username>  # encrypt
+#        cat file.age | github_crypt              # decrypt
 # https://github.com/FiloSottile/age
 function github_crypt() {
 	if [ -z "$1" ]
@@ -171,14 +184,8 @@ function github_crypt() {
 	fi
 }
 
-# Run a Python script with UV
-# https://github.com/astral-sh/uv/issues/8432#issuecomment-2449749852
-function py() {
-  uv run $1
-}
-
 # Archive a GitHub repository
-# $ gh_archive sainsburys-tech discoverability-org-viz
+# Usage: gh_archive <org> <repo>
 function gh_archive() {
   local org=$1
   local repo=$2
@@ -186,7 +193,7 @@ function gh_archive() {
 }
 
 # Delete a GitHub repository
-# $ gh_delete sainsburys-tech jp-pd
+# Usage: gh_delete <org> <repo>
 function gh_delete() {
   local org=$1
   local repo=$2
@@ -194,7 +201,7 @@ function gh_delete() {
 }
 
 # Add a team to a GitHub repository
-# $ gh_add_team JSainsburyPLC cvu-argos-similar-products-aspire gdp-orange-admin admin
+# Usage: gh_add_team <org> <repo> <team_slug> <permission>
 function gh_add_team() {
   local org=$1
 	local repo=$2
@@ -208,7 +215,7 @@ function gh_add_team() {
 }
 
 # Add a collaborator to a GitHub repository
-# $ gh_add_collaborator JSainsburyPLC tu-bastion-infra evaj03 admin
+# Usage: gh_add_collaborator <org> <repo> <collaborator> <permission>
 function gh_add_collaborator() {
   local org=$1
   local repo=$2
@@ -222,7 +229,7 @@ function gh_add_collaborator() {
 }
 
 # Remove a user from a GitHub enterprise
-# $ gh_remove_user j-sainsbury-plc evaj03
+# Usage: gh_remove_user <enterprise> <user>
 function gh_remove_user() {
   local enterprise=$1
   local user=$2
@@ -247,8 +254,8 @@ mutation($enterprise:ID!, $user:ID!) {
 '
 }
 
-# App a repo to a GitHub app installation
-# $ gh_app_add 1234567890 JSainsburyPLC tu-bastion-infra
+# Add a repo to a GitHub app installation
+# Usage: gh_app_add <installationId> <org> <repo>
 function gh_app_add() {
   local installationId=$1
   local org=$2
