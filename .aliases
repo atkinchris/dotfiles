@@ -1,31 +1,19 @@
-# Easier navigation
+# =============================================================================
+# NAVIGATION SHORTCUTS
+# =============================================================================
+# Directory navigation
 alias ..="cd .."
 alias ...="cd ../.."
 alias ~="cd ~"
 
-# Shortcuts
+# Quick directory access
 alias s="cd ~/Source"
 alias dl="cd ~/Downloads"
 alias dt="cd ~/Desktop"
-alias g="git"
-alias commit="npx cz"
-alias sha256="shasum -a 256"
-alias t="nb tasks open"
-alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
-alias withcode="EDITOR='code -w'"
-
-# Architecture shortcuts
-alias archx64="arch -x86_64 /bin/zsh"
-alias whicharch="echo 'OS:' && uname -p && echo 'node:' && node -p process.arch"
-
-# Detect which `ls` flavor is in use
-if ls --color > /dev/null 2>&1; then # GNU `ls`
-	colorflag="--color"
-else # OS X `ls`
-	colorflag="-G"
-fi
-
+# =============================================================================
+# FILE LISTING (Enhanced ls with eza)
+# =============================================================================
 # List all files colorized in long format
 alias l="eza -l --icons --git -a --no-user --group-directories-first"
 
@@ -34,3 +22,19 @@ alias ld="l --only-dirs"
 
 # List files in a tree format
 alias lt="l --tree --level=2"
+
+# =============================================================================
+# SYSTEM UTILITIES
+# =============================================================================
+# Architecture and system info
+alias archx64="arch -x86_64 /bin/zsh"
+alias whicharch="echo 'OS:' && uname -p && echo 'node:' && node -p process.arch"
+
+# Cryptographic utilities
+alias sha256="shasum -a 256"
+
+# =============================================================================
+# APPLICATION SHORTCUTS
+# =============================================================================
+# Tailscale VPN
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
