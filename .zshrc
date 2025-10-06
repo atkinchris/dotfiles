@@ -88,11 +88,6 @@ bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
 [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
 [[ -f /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
 
-# Enable GitHub Copilot CLI aliases
-if command -v gh >/dev/null 2>&1; then
-    eval "$(gh copilot alias -- zsh)"
-fi
-
 # Enable Atuin shell history management
 if [[ -f "$HOME/.atuin/bin/env" ]]; then
     source "$HOME/.atuin/bin/env"
