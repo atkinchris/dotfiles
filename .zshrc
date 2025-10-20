@@ -94,6 +94,11 @@ if [[ -f "$HOME/.atuin/bin/env" ]]; then
     eval "$(atuin init zsh)"
 fi
 
+# Enable Cargo environment if available
+if [[ -f "$HOME/.cargo/env" ]]; then
+    source "$HOME/.cargo/env"
+fi
+
 # Load 1Password CLI plugins if available
 [[ -f ~/.config/op/plugins.sh ]] && source ~/.config/op/plugins.sh
 
