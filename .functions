@@ -267,3 +267,12 @@ function gh_app_add() {
 
   gh api -X PUT /user/installations/$installationId/repositories/$repoId
 }
+
+# Look up a user's SAML identity for a GitHub organization
+# Usage: gh_saml_lookup <org> <email>
+function gh_saml_lookup() {
+	local org="${1:?Provide an organization slug}"
+	local email="${2:?Provide an email address}"
+
+	gh api graphql -f query='query($org: String!, $email: String!) { organization(login: $org) { samlIdentityProvider { externalIdentities(first: 10, userName: $email) { nodes { id scimIdentity { username } user { login } } } } } }' -f org="$org" -f email="$email"
+}
