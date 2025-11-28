@@ -46,5 +46,5 @@ brew bundle install --file=Brewfile
 
 # Backup a list of installed applications to the Brewfile
 # This needs --force to overwrite the current Brewfile
-brew bundle dump --taps --brews --casks --file=Brewfile --force
+brew bundle dump --no-vscode --file=Brewfile --force
 ```
