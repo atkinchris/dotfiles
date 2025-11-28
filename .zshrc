@@ -97,7 +97,10 @@ if [[ -f "$HOME/.cargo/env" ]]; then
 fi
 
 # Load 1Password CLI plugins if available
-[[ -f ~/.config/op/plugins.sh ]] && source ~/.config/op/plugins.sh
+
+# Homebrew settings
+# Prevent Homebrew from installing Node, to avoid bringing in unmanaged versions or package managers
+export HOMEBREW_FORBIDDEN_FORMULAE="node"
 
 # =============================================================================
 # APPLICATION-SPECIFIC ENVIRONMENT VARIABLES
