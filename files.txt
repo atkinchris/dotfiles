@@ -13,3 +13,4 @@
 ./.ssh/config
 ./.aws/config
 ./.config/atuin/config.toml
+./.config/ghostty/config

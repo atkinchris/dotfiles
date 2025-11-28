@@ -1,0 +1,14 @@
+theme = GitHub Dark Default
+
+auto-update = check
+clipboard-write = allow
+
+font-family = "Monaspace Neon"
+font-size = 14
+
+window-padding-x = 20
+window-padding-y = 20
+window-step-resize = true
+
+macos-icon = custom-style
+macos-icon-screen-color = #000000
