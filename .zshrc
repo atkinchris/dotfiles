@@ -37,9 +37,6 @@ fi
 # Set up PATH with proper ordering (most specific first)
 export PATH="$HOME/.local/bin:$HOME/bin:/opt/homebrew/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 
-# Load NVM (Node Version Manager) using zsh-nvm plugin and enable lazy loading
-export NVM_LAZY_LOAD=true
-
 # Set default user for prompt
 DEFAULT_USER=$(whoami)
 
@@ -49,7 +46,7 @@ DEFAULT_USER=$(whoami)
 # Oh My Zsh configuration
 export ZSH=~/.oh-my-zsh
 ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(git zoxide zsh-nvm zsh-autocomplete)
+plugins=(git zoxide zsh-autocomplete)
 
 # Load Oh My Zsh
 [[ -r "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"

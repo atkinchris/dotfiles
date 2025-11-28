@@ -38,3 +38,7 @@ alias sha256="shasum -a 256"
 # =============================================================================
 # Tailscale VPN
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+
+# pnpm to replace npm
+alias npm="pnpm"
+alias npx="pnpm dlx"
