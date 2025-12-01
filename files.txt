@@ -11,6 +11,7 @@
 ./.hushlogin
 ./.extra
 ./.ssh/config
+./.nvm/default-packages
 ./.aws/config
 ./.config/atuin/config.toml
 ./.config/ghostty/config
