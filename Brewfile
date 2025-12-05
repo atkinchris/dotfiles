@@ -1,6 +1,5 @@
 tap "1password/tap"
 tap "hashicorp/tap"
-tap "homebrew/bundle"
 tap "trufflesecurity/trufflehog"
 tap "warrensbox/tap"
 tap "xwmx/taps"
