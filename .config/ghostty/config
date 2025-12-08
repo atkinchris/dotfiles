@@ -11,4 +11,5 @@ window-padding-y = 20
 window-step-resize = true
 
 macos-icon = custom-style
+macos-icon-ghost-color = #888888
 macos-icon-screen-color = #000000
