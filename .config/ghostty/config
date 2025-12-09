@@ -1,3 +1,5 @@
+# https://ghostty.org/docs/config
+
 theme = GitHub Dark Default
 
 auto-update = check
@@ -5,6 +7,9 @@ clipboard-write = allow
 
 font-family = "Monaspace Neon"
 font-size = 14
+
+window-width = 120
+window-height = 32
 
 window-padding-x = 20
 window-padding-y = 20
