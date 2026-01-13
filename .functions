@@ -225,7 +225,7 @@ function bundle_github() {
 function github_crypt() {
 	if [ -z "$1" ]
 	then
-		age -d -i <(op read op://Private/GitHub/'private key')
+		age -d -i <(op read "op://Private/sc2bey5o5zvzdxuya6yzsrpp4u/private key")
 	else
 		age -a -R <(curl -sS https://github.com/$1.keys)
 	fi
