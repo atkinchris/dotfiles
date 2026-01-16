@@ -20,12 +20,6 @@ brew cleanup
 # Setup git lfs
 git lfs install
 
-# Setup iTerm2 to use a preferences file
-mkdir -p ~/.iterm2
-cp ./.iterm2/com.googlecode.iterm2.plist ~/.iterm2/
-defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.iterm2"
-defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
-
 # Setup terminal tools, like oh-my-zsh, powerlevel10k and nvm
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 git clone https://github.com/romkatv/powerlevel10k.git $ZSH_CUSTOM/themes/powerlevel10k
