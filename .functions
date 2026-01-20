@@ -218,17 +218,36 @@ function bundle_github() {
   rm -rf "$repo_dir"
 }
 
-# Encrypt stdin for a GitHub user or decrypt for self with age
-# Usage: echo "secret" | github_crypt <username>  # encrypt
-#        cat file.age | github_crypt              # decrypt
+# Encrypt stdin for one or more GitHub users or decrypt for self with age
+# Usage: printf "secret" | github_crypt <user1> [user2 ...]  # encrypt to multiple recipients
+#        cat file.age | github_crypt                         # decrypt
+#        github_crypt <user1> [user2 ...]                    # interactive encrypt (no echo)
+#        github_crypt                                        # interactive decrypt (no echo)
 # https://github.com/FiloSottile/age
 function github_crypt() {
-	if [ -z "$1" ]
-	then
-		age -d -i <(op read "op://Private/sc2bey5o5zvzdxuya6yzsrpp4u/private key")
+	local input
+
+	# Read input either interactively (silent) or from stdin
+	if [ -t 0 ]; then
+		read -s input
 	else
-		age -a -R <(curl -sS https://github.com/$1.keys)
+		input=$(cat)
 	fi
+
+  # Encrypt or decrypt
+  if [ -z "$1" ]; then
+		# Decrypt using local age identity from 1Password
+    echo "$input" | age -d -i <(op read "op://Private/sc2bey5o5zvzdxuya6yzsrpp4u/private key")
+    return
+  fi
+
+  # Encrypt to all recipients by streaming their public keys
+  # Example: printf 'https://github.com/%s.keys ' alice bob
+  # -> https://github.com/alice.keys https://github.com/bob.keys
+  # curl accepts multiple URLs and concatenates responses in order
+  echo "$input" | age -a -R <(
+    curl -sS $(printf 'https://github.com/%s.keys ' "$@")
+  )
 }
 
 # Archive a GitHub repository
