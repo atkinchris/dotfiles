@@ -153,8 +153,14 @@ function launchctlFind() {
 # Tests for token validity
 # Usage: test_github_scopes <token>
 function test_github_scopes() {
-	curl -sS -H "Authorization: token $1" https://api.github.com/user | jq -r .login
-	curl -sS -f -I -H "Authorization: token $1" https://api.github.com | grep ^x-oauth-scopes: | cut -d' ' -f2- | tr -d "[:space:]"
+  local login=$(curl -sS -H "Authorization: token $1" https://api.github.com/user | jq -r .login)
+  local headers=$(curl -sS -f -I -H "Authorization: token $1" https://api.github.com)
+  local scopes=$(printf "%s\n" "$headers" | grep -i '^x-oauth-scopes:' | cut -d' ' -f2- | tr -d "[:space:]")
+  local expiration=$(printf "%s\n" "$headers" | grep -i '^github-authentication-token-expiration:' | cut -d' ' -f2- | tr -d "[:space:]")
+
+  echo "$login"
+  echo "$scopes"
+  echo "$expiration"
 }
 
 # Revokes one or more GitHub tokens
