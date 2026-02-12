@@ -1,0 +1,79 @@
+#!/usr/bin/env python3
+
+# Flatten and rename TV episode files
+# Usage: tv_renamer <source_folder> <destination_folder>
+
+import argparse
+import os
+import re
+import shutil
+import sys
+from pathlib import Path
+
+MEDIA_EXTENSIONS = {".mkv", ".mp4"}
+EPISODE_PATTERN = re.compile(r"(?i)(.+?)[ ._\-]*s(\d{1,2})e(\d{1,2})")
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Copy MKV/MP4 files into a flat folder named '<Show Name> - SxxExx.ext>'."
+    )
+    parser.add_argument("source", help="Folder to search (recursively).")
+    parser.add_argument("destination", help="Folder where renamed copies should go.")
+    args = parser.parse_args()
+
+    source = Path(args.source).expanduser().resolve()
+    destination = Path(args.destination).expanduser().resolve()
+
+    if not source.is_dir():
+        sys.exit(f"Source directory '{source}' does not exist or is not a directory.")
+
+    destination.mkdir(parents=True, exist_ok=True)
+
+    copied = 0
+    skipped: list[str] = []
+
+    for root, _, files in os.walk(source):
+        root_path = Path(root)
+        try:
+            root_path.relative_to(destination)
+            # Skip anything already inside the destination tree.
+            continue
+        except ValueError:
+            pass
+
+        for filename in files:
+            ext = Path(filename).suffix.lower()
+            if ext not in MEDIA_EXTENSIONS:
+                continue
+
+            match = EPISODE_PATTERN.search(filename)
+            if not match:
+                skipped.append(str(root_path / filename))
+                continue
+
+            raw_show, season_str, episode_str = match.groups()
+            show_name = re.sub(r"[._\-]+", " ", raw_show)
+            show_name = re.sub(r"\s+", " ", show_name).strip()
+            if not show_name:
+                skipped.append(str(root_path / filename))
+                continue
+
+            new_name = (
+                f"{show_name} - S{int(season_str):02d}E{int(episode_str):02d}{ext}"
+            )
+            src_path = root_path / filename
+            dest_path = destination / new_name
+            shutil.copy2(src_path, dest_path)
+            copied += 1
+            print(f"Copied '{src_path}' -> '{dest_path.name}'")
+
+    print(f"\nDone. Copied {copied} file(s).")
+    if skipped:
+        print("Skipped files (no SxxExx pattern detected):")
+        for path in skipped:
+            print(f"  - {path}")
+
+
+if __name__ == "__main__":
+    main()

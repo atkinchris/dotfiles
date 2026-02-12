@@ -16,3 +16,4 @@
 ./.config/ghostty/config
 ./.yarnrc.yml
 ./.local/bin/gh_remove_dormant_users
+./.local/bin/tv_renamer
