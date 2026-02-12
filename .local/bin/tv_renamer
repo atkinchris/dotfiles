@@ -10,23 +10,32 @@ import shutil
 import sys
 from pathlib import Path
 
+# Supported media extensions
 MEDIA_EXTENSIONS = {".mkv", ".mp4"}
 EPISODE_PATTERN = re.compile(r"(?i)(.+?)[ ._\-]*s(\d{1,2})e(\d{1,2})")
 
 
-def main() -> None:
+def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Copy MKV/MP4 files into a flat folder named '<Show Name> - SxxExx.ext>'."
     )
     parser.add_argument("source", help="Folder to search (recursively).")
     parser.add_argument("destination", help="Folder where renamed copies should go.")
-    args = parser.parse_args()
+    return parser.parse_args()
+
+
+def main() -> int:
+    args = parse_args()
 
     source = Path(args.source).expanduser().resolve()
     destination = Path(args.destination).expanduser().resolve()
 
     if not source.is_dir():
-        sys.exit(f"Source directory '{source}' does not exist or is not a directory.")
+        print(
+            f"Source directory '{source}' does not exist or is not a directory.",
+            file=sys.stderr,
+        )
+        return 1
 
     destination.mkdir(parents=True, exist_ok=True)
 
@@ -74,6 +83,8 @@ def main() -> None:
         for path in skipped:
             print(f"  - {path}")
 
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())
