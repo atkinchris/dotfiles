@@ -1,0 +1,144 @@
+#!/usr/bin/env python3
+
+# Remove dormant users listed in a CSV report
+# Usage: gh_remove_dormant_users <enterprise> <csv_report> [--dry-run]
+
+import argparse
+import csv
+import json
+import subprocess
+import sys
+from typing import Dict, Optional
+
+
+# GitHub usernames to exclude from removal
+EXCLUDED_LOGINS = {"atkinchris", "jsplc", "jsplc-user"}
+
+
+def run_gh_graphql(query: str, variables: Dict[str, str]) -> Dict:
+    args = ["gh", "api", "graphql", "-f", f"query={query}"]
+    for key, value in variables.items():
+        args.extend(["-F", f"{key}={value}"])
+
+    result = subprocess.run(args, capture_output=True, text=True)
+    if result.returncode != 0:
+        message = result.stderr.strip() or result.stdout.strip()
+        raise RuntimeError(f"gh api graphql failed: {message}")
+
+    try:
+        return json.loads(result.stdout)
+    except json.JSONDecodeError as exc:
+        raise RuntimeError("Failed to parse gh api output as JSON") from exc
+
+
+def get_user_id(login: str) -> str:
+    query = "query($login: String!) { user(login: $login) { id } }"
+    data = run_gh_graphql(query, {"login": login})
+    user = data.get("data", {}).get("user")
+    if not user or not user.get("id"):
+        raise RuntimeError(f"User not found or missing id: {login}")
+    return user["id"]
+
+
+def get_enterprise_id(slug: str) -> str:
+    query = "query($slug: String!) { enterprise(slug: $slug) { id } }"
+    data = run_gh_graphql(query, {"slug": slug})
+    enterprise = data.get("data", {}).get("enterprise")
+    if not enterprise or not enterprise.get("id"):
+        raise RuntimeError(f"Enterprise not found or missing id: {slug}")
+    return enterprise["id"]
+
+
+def remove_enterprise_member(enterprise_id: str, user_id: str) -> None:
+    mutation = """
+mutation($enterprise:ID!, $user:ID!) {
+  removeEnterpriseMember(
+    input: {enterpriseId: $enterprise, userId: $user}
+  ) {
+    clientMutationId
+  }
+}
+"""
+    run_gh_graphql(mutation, {"enterprise": enterprise_id, "user": user_id})
+
+
+def normalize_bool(value: Optional[str]) -> str:
+    if value is None:
+        return ""
+    return value.strip().lower()
+
+
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Remove dormant GitHub enterprise users from a CSV report",
+    )
+    parser.add_argument("enterprise", help="GitHub enterprise slug")
+    parser.add_argument("csv_report", help="CSV report path")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print actions without removing users",
+    )
+    return parser.parse_args()
+
+
+def main() -> int:
+    args = parse_args()
+
+    try:
+        with open(args.csv_report, newline="") as handle:
+            reader = csv.DictReader(handle)
+            if not reader.fieldnames:
+                raise RuntimeError("CSV report has no headers")
+
+            if "login" not in reader.fieldnames:
+                raise RuntimeError("CSV missing required column: login")
+
+            outside_key = None
+            if "outside_collaborator" in reader.fieldnames:
+                outside_key = "outside_collaborator"
+            elif "outside_collaborator?" in reader.fieldnames:
+                outside_key = "outside_collaborator?"
+            else:
+                raise RuntimeError("CSV missing required column: outside_collaborator")
+
+            enterprise_id: Optional[str] = None
+
+            for row in reader:
+                login = (row.get("login") or "").strip()
+                if not login:
+                    continue
+
+                login_lc = login.lower()
+                if login_lc in EXCLUDED_LOGINS:
+                    print(f"Skipping excluded user: {login}")
+                    continue
+
+                outside_value = normalize_bool(row.get(outside_key))
+                if outside_value == "true":
+                    print(f"Skipping outside collaborator: {login}")
+                    continue
+
+                if args.dry_run:
+                    print(f"[dry-run] Would remove {login} from {args.enterprise}")
+                    continue
+
+                if enterprise_id is None:
+                    enterprise_id = get_enterprise_id(args.enterprise)
+
+                print(f"Removing {login} from {args.enterprise}")
+                user_id = get_user_id(login)
+                remove_enterprise_member(enterprise_id, user_id)
+
+    except FileNotFoundError:
+        print(f"CSV report not found: {args.csv_report}", file=sys.stderr)
+        return 1
+    except RuntimeError as exc:
+        print(str(exc), file=sys.stderr)
+        return 1
+
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
