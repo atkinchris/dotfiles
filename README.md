@@ -62,3 +62,13 @@ To run locally:
 ```sh
 bash ./scripts/lint-shell.sh
 ```
+
+### Python linting
+
+Python scripts (detected via `#!/usr/bin/env python`-style shebangs, including `python3`) are linted with `ruff`.
+
+To run locally:
+
+```sh
+bash ./scripts/lint-python.sh
+```
