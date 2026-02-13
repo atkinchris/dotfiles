@@ -6,6 +6,8 @@ Collection of dotfiles and helper scripts
 
 Clone this repo, and run `./bootstrap.sh`. This will copy all the dotfiles (but not helper scripts) into your home directory.
 
+Installer scripts in `./scripts/` are designed to be idempotent and safe to re-run. They skip already-installed components where possible and use unattended install modes for tools like Oh My Zsh.
+
 ## Files
 
 The `./bootstrap.sh` script will sync files from this repo to your home directory. It uses a static list of files (`./files.txt`) to explicitly know what to copy. If you add new files to this repo that need to be copied to the home directory, ensure they are added to that list.
