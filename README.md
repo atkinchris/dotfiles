@@ -48,3 +48,16 @@ brew bundle install --file=Brewfile
 # This needs --force to overwrite the current Brewfile
 brew bundle dump --no-vscode --file=Brewfile --force
 ```
+
+### Shell linting
+
+Shell scripts in this repository are linted with `shellcheck` and formatting-checked with `shfmt`.
+Sourced shell dotfiles such as `.aliases`, `.functions`, `.bashrc`, and `.zshrc` are also validated for Bash compatibility.
+
+To run locally:
+
+```sh
+bash ./scripts/lint-shell.sh
+```
+
+This is also run in CI via `.github/workflows/shell-lint.yml`.

@@ -138,12 +138,12 @@ function launchctlFind() {
         /System/Library/LaunchAgents \
         /System/Library/LaunchDaemons \
     )
+  local curPATH
 
-    for local curPATH in "${LaunchctlPATHS[@]}"
-    do
-        grep -R "$curPATH" -e "$1"
+  for curPATH in "${LaunchctlPATHS[@]}"; do
+    grep -R -- "$1" "$curPATH"
     done
-    return 0;
+  return 0
 }
 
 # =============================================================================
