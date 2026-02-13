@@ -1,0 +1,10 @@
+#compdef gh_remove_dormant_users
+
+_gh_remove_dormant_users() {
+  _arguments -s \
+    '--dry-run[Print actions without removing users]' \
+    '1:enterprise slug:' \
+    '2:csv report path:_files -g "*.csv"'
+}
+
+_gh_remove_dormant_users "$@"

@@ -1,0 +1,9 @@
+#compdef tv_renamer
+
+_tv_renamer() {
+  _arguments -s \
+    '1:source directory:_files -/' \
+    '2:destination directory:_files -/'
+}
+
+_tv_renamer "$@"

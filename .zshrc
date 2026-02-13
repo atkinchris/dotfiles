@@ -37,6 +37,9 @@ fi
 # Set up PATH with proper ordering (most specific first)
 export PATH="$HOME/.local/bin:$HOME/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 
+# Add custom completion definitions for local CLI scripts
+fpath=("$HOME/.local/share/zsh/site-functions" $fpath)
+
 # Load NVM (Node Version Manager) using zsh-nvm plugin and enable lazy loading
 export NVM_LAZY_LOAD=true
 
