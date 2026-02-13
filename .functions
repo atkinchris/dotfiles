@@ -24,7 +24,7 @@ function o() {
 
 # Create a new directory and enter it
 function mkd() {
-	mkdir -p "$@" && cd "$_"
+  mkdir -p "$@" && cd "$_" || return
 }
 
 # =============================================================================
@@ -41,7 +41,7 @@ function dockerclean() {
 
 # Start an interactive Docker container with the present directory mounted
 function dkr() {
-	docker run -v "$(pwd):/workdir" -w /workdir -it --rm $@
+  docker run -v "$(pwd):/workdir" -w /workdir -it --rm "$@"
 }
 
 # Start an interactive Debian Docker container with the present directory mounted
@@ -56,12 +56,14 @@ function alpinehere() {
 
 # Build and run the Dockerfile at the current directory
 function dockerhere() {
-	local TAG=$(openssl rand -hex 12)
-	DOCKER_CLI_HINTS=false docker build -qt $TAG . && dkr $TAG
+  local TAG
+  TAG=$(openssl rand -hex 12)
+  DOCKER_CLI_HINTS=false docker build -qt "$TAG" . && dkr "$TAG"
 }
 
 # Run Docker Compose file in local directory
 function compose() {
+  # shellcheck disable=SC2329
 	function on_exit() {
 		docker-compose stop
 		docker-compose kill
@@ -73,7 +75,7 @@ function compose() {
 	docker-compose kill
 	docker-compose rm -vf
 	docker-compose build
-  docker-compose up --remove-orphans $@
+  docker-compose up --remove-orphans "$@"
 }
 
 # =============================================================================
@@ -88,9 +90,10 @@ function randomstr() {
 # Dedupe zsh history
 function dedupHistory() {
 	cp ~/.zsh_history{,-old}
-	local tmpFile=$(mktemp)
-	awk -F ";" '!seen[$2]++' ~/.zsh_history > $tmpFile
-	mv $tmpFile ~/.zsh_history
+  local tmpFile
+  tmpFile=$(mktemp)
+  awk -F ";" '!seen[$2]++' ~/.zsh_history > "$tmpFile"
+  mv "$tmpFile" ~/.zsh_history
 }
 
 # Turn WiFi off and on again to fix slow connections after sleep
@@ -105,10 +108,10 @@ function send() {
 	local DEVICE=$1; shift
 	local BAUD=$1; shift
 
-	cat $DEVICE &
-	stty -f $DEVICE $BAUD
+  cat "$DEVICE" &
+  stty -f "$DEVICE" "$BAUD"
 
-	echo -e "$@" > $DEVICE
+  echo -e "$@" > "$DEVICE"
 	fg
 }
 
@@ -119,7 +122,7 @@ function send() {
 # List all Homebrew packages and the reasons they're installed
 # https://www.thingy-ma-jig.co.uk/blog/22-09-2014/homebrew-list-packages-and-what-uses-them
 function listHomebrew() {
-	brew list -1 | while read cask; do echo -ne "\x1B[1;34m $cask \x1B[0m"; brew uses $cask --installed | awk '{printf(" %s ", $0)}'; echo ""; done
+  brew list -1 | while read -r cask; do echo -ne "\x1B[1;34m $cask \x1B[0m"; brew uses "$cask" --installed | awk '{printf(" %s ", $0)}'; echo ""; done
 }
 
 # List all Agents and Daemons
@@ -153,10 +156,15 @@ function launchctlFind() {
 # Tests for token validity
 # Usage: test_github_scopes <token>
 function test_github_scopes() {
-  local login=$(curl -sS -H "Authorization: token $1" https://api.github.com/user | jq -r .login)
-  local headers=$(curl -sS -f -I -H "Authorization: token $1" https://api.github.com)
-  local scopes=$(printf "%s\n" "$headers" | grep -i '^x-oauth-scopes:' | cut -d' ' -f2- | tr -d "[:space:]")
-  local expiration=$(printf "%s\n" "$headers" | grep -i '^github-authentication-token-expiration:' | cut -d' ' -f2- | tr -d "[:space:]")
+  local login
+  local headers
+  local scopes
+  local expiration
+
+  login=$(curl -sS -H "Authorization: token $1" https://api.github.com/user | jq -r .login)
+  headers=$(curl -sS -f -I -H "Authorization: token $1" https://api.github.com)
+  scopes=$(printf "%s\n" "$headers" | grep -i '^x-oauth-scopes:' | cut -d' ' -f2- | tr -d "[:space:]")
+  expiration=$(printf "%s\n" "$headers" | grep -i '^github-authentication-token-expiration:' | cut -d' ' -f2- | tr -d "[:space:]")
 
   echo "$login"
   echo "$scopes"
@@ -196,7 +204,7 @@ function revoke_github_token() {
     -d "$payload")
 
   local http_code=${response##*$'\n'}
-  local body=${response%$'\n'$http_code}
+  local body=${response%$'\n'"$http_code"}
 
   if [[ "$http_code" == "202" ]]; then
     echo "Token revocation accepted (HTTP 202)."
@@ -215,9 +223,10 @@ function revoke_github_token() {
 function bundle_github() {
 	local url=$1
 	local output=$2
-	local repo_dir=$(basename $url)
+  local repo_dir
+  repo_dir=$(basename "$url")
 
-  git clone --mirror $url || return 1
+  git clone --mirror "$url" || return 1
   cd "$repo_dir" || return 1
   git bundle create "../$output.bundle" --all || { cd ..; rm -rf "$repo_dir"; return 1; }
   cd .. || return 1 # Should generally succeed, but good practice
@@ -235,7 +244,7 @@ function github_crypt() {
 
 	# Read input either interactively (silent) or from stdin
 	if [ -t 0 ]; then
-		read -s input
+    read -rs input
 	else
 		input=$(cat)
 	fi
@@ -251,8 +260,14 @@ function github_crypt() {
   # Example: printf 'https://github.com/%s.keys ' alice bob
   # -> https://github.com/alice.keys https://github.com/bob.keys
   # curl accepts multiple URLs and concatenates responses in order
+  local recipient_urls=()
+  local user
+  for user in "$@"; do
+    recipient_urls+=("https://github.com/${user}.keys")
+  done
+
   echo "$input" | age -a -R <(
-    curl -sS $(printf 'https://github.com/%s.keys ' "$@")
+    curl -sS "${recipient_urls[@]}"
   )
 }
 
@@ -261,7 +276,7 @@ function github_crypt() {
 function gh_archive() {
   local org=$1
   local repo=$2
-  gh repo archive -y $org/$repo
+  gh repo archive -y "$org/$repo"
 }
 
 # Delete a GitHub repository
@@ -269,7 +284,7 @@ function gh_archive() {
 function gh_delete() {
   local org=$1
   local repo=$2
-  gh repo delete --yes $org/$repo
+  gh repo delete --yes "$org/$repo"
 }
 
 # Add a team to a GitHub repository
@@ -305,16 +320,21 @@ function gh_add_collaborator() {
 function gh_remove_user() {
   local enterprise=$1
   local user=$2
+  local user_id
+  local enterprise_id
 
   # Get the user ID
-  local user_id=$(gh api graphql -f query='query($login: String!) { user(login:$login) { id } }' -F login=$user | jq -r '.data.user.id')
+  # shellcheck disable=SC2016
+  user_id=$(gh api graphql -f query='query($login: String!) { user(login:$login) { id } }' -F login="$user" | jq -r '.data.user.id')
 
   # Get the enterprise ID
-  local enterprise_id=$(gh api graphql -f query='query($slug: String!) { enterprise(slug: $slug) { id } }' -F slug=$enterprise | jq -r '.data.enterprise.id')
+  # shellcheck disable=SC2016
+  enterprise_id=$(gh api graphql -f query='query($slug: String!) { enterprise(slug: $slug) { id } }' -F slug="$enterprise" | jq -r '.data.enterprise.id')
 
+  # shellcheck disable=SC2016
   gh api graphql \
-    -F enterprise=$enterprise_id \
-    -F user=$user_id \
+    -F enterprise="$enterprise_id" \
+    -F user="$user_id" \
     -f query='
 mutation($enterprise:ID!, $user:ID!) {
   removeEnterpriseMember(
@@ -332,12 +352,13 @@ function gh_app_add() {
   local installationId=$1
   local org=$2
   local repo=$3
+  local repoId
 
-  local repoId=$(gh api /repos/$org/$repo | jq -r .id)
+  repoId=$(gh api "/repos/$org/$repo" | jq -r .id)
 
   echo "Adding $repo to $org with installationId $installationId and repoId $repoId"
 
-  gh api -X PUT /user/installations/$installationId/repositories/$repoId
+  gh api -X PUT "/user/installations/$installationId/repositories/$repoId"
 }
 
 # Look up a user's SAML identity for a GitHub organization
@@ -346,5 +367,6 @@ function gh_saml_lookup() {
 	local org="${1:?Provide an organization slug}"
 	local email="${2:?Provide an email address}"
 
+  # shellcheck disable=SC2016
 	gh api graphql -f query='query($org: String!, $email: String!) { organization(login: $org) { samlIdentityProvider { externalIdentities(first: 10, userName: $email) { nodes { id scimIdentity { username } user { login } } } } } }' -f org="$org" -f email="$email"
 }
