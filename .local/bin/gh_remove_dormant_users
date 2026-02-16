@@ -62,6 +62,10 @@ mutation($enterprise:ID!, $user:ID!) {
     run_gh_graphql(mutation, {"enterprise": enterprise_id, "user": user_id})
 
 
+def is_user_not_enterprise_member_error(message: str) -> bool:
+    return "doesn't belong to" in message.lower()
+
+
 def normalize_bool(value: Optional[str]) -> str:
     if value is None:
         return ""
@@ -128,7 +132,13 @@ def main() -> int:
 
                 print(f"Removing {login} from {args.enterprise}")
                 user_id = get_user_id(login)
-                remove_enterprise_member(enterprise_id, user_id)
+                try:
+                    remove_enterprise_member(enterprise_id, user_id)
+                except RuntimeError as exc:
+                    if is_user_not_enterprise_member_error(str(exc)):
+                        print(f"Skipping already-removed user: {login}")
+                        continue
+                    raise
 
     except FileNotFoundError:
         print(f"CSV report not found: {args.csv_report}", file=sys.stderr)
@@ -136,6 +146,9 @@ def main() -> int:
     except RuntimeError as exc:
         print(str(exc), file=sys.stderr)
         return 1
+    except KeyboardInterrupt:
+        print("Interrupted by user", file=sys.stderr)
+        return 130
 
     return 0
 
