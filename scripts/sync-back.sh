@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+# sync-back.sh
+#
+# Copies managed dotfiles from $HOME back into this repository.
+#
+# Behavior:
+# - Uses files.txt as the source of truth for most paths.
+# - Treats ./.local/bin specially: only scripts that already exist in the
+#   repository are copied back, so host-only scripts are not imported.
+# - Skips paths that do not exist in $HOME (macOS rsync compatibility).
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 FILES_LIST="$REPO_ROOT/files.txt"
