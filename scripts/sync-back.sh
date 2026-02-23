@@ -22,7 +22,8 @@ fi
 
 tmp_files="$(mktemp)"
 cleanup() {
-  rm -f "$tmp_files"
+  [[ -e "$tmp_files" || -L "$tmp_files" ]] || return 0
+  rm "$tmp_files"
 }
 trap cleanup EXIT
 
