@@ -15,7 +15,5 @@
 ./.config/atuin/config.toml
 ./.config/ghostty/config
 ./.yarnrc.yml
-./.local/bin/degremlinise
-./.local/bin/gh_remove_dormant_users
-./.local/bin/tv_renamer
+./.local/bin/
 ./.local/share/zsh/site-functions/

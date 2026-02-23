@@ -23,8 +23,14 @@ find . -type f ! -name '*.sh' ! -name '*.md' ! -path './.git/*' > files.txt
 If you've updated your local copies of these files in your home directory, and want to commit them back to this repo, use the following command to copy them over (this is the reverse of what is in `./bootstrap.sh`).
 
 ```sh
-rsync -avr --no-perms --files-from=files.txt ~ .
+bash ./scripts/sync-back.sh
 ```
+
+This helper script is intentionally stricter than a plain reverse `rsync`:
+
+- It syncs entries from `files.txt` as usual.
+- For `./.local/bin/`, it copies back **only files that already exist in this repository**.
+- Any host-only scripts in `~/.local/bin` are ignored and will not be copied into this repo.
 
 ## Useful Tips
 
