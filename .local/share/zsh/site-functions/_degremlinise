@@ -1,0 +1,11 @@
+#compdef degremlinise
+
+_degremlinise() {
+  _arguments -s \
+    '(-w --write)--check[Do not write changes; exit non-zero if any file would change]' \
+    '(-c --check)--write[Write changes back to files]' \
+    "--extensions[File extensions to include (space-separated, e.g. .md .markdown)]:extension:_values 'extensions' '.md[Markdown]' '.markdown[Markdown (long extension)]' 'md[Markdown (no leading dot)]' 'markdown[Markdown long (no leading dot)]'" \
+    '*:paths:_files -/'
+}
+
+_degremlinise "$@"

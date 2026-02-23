@@ -1,0 +1,159 @@
+#!/usr/bin/env python3
+
+# De-gremlinise text files by replacing typographic punctuation with plain ASCII
+# Usage: degremlinise [--check | --write] [--extensions EXT ...] [paths ...]
+
+from __future__ import annotations
+
+import argparse
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Iterable, Sequence
+
+
+# Single-character replacements (keys are the “gremlin” characters).
+_TRANSLATIONS: dict[int, str] = {
+    # Smart single quotes / apostrophes
+    ord("\u2018"): "'",  # ‘
+    ord("\u2019"): "'",  # ’
+    ord("\u201b"): "'",  # ‛
+    ord("\u2032"): "'",  # ′
+    # Smart double quotes
+    ord("\u201c"): '"',  # “
+    ord("\u201d"): '"',  # ”
+    ord("\u201e"): '"',  # „
+    ord("\u201f"): '"',  # ‟
+    ord("\u2033"): '"',  # ″
+    # Dashes / minus
+    ord("\u2010"): "-",  # ‐ hyphen
+    ord("\u2011"): "-",  # ‑ non-breaking hyphen
+    ord("\u2012"): "-",  # ‒ figure dash
+    ord("\u2013"): "-",  # – en dash
+    ord("\u2014"): "-",  # — em dash
+    ord("\u2015"): "-",  # ― horizontal bar
+    ord("\u2212"): "-",  # − minus
+    # Ellipsis
+    ord("\u2026"): "...",  # …
+    # Spaces
+    ord("\u00a0"): " ",  # non-breaking space
+    ord("\u202f"): " ",  # narrow no-break space
+    # Zero-width / BOM (remove)
+    ord("\u200b"): "",  # zero width space
+    ord("\u200c"): "",  # zero width non-joiner
+    ord("\u200d"): "",  # zero width joiner
+    ord("\u2060"): "",  # word joiner
+    ord("\ufeff"): "",  # BOM / zero width no-break space
+}
+
+_DEFAULT_EXTENSIONS = (".md", ".markdown")
+
+
+@dataclass(frozen=True)
+class Change:
+    path: Path
+    gremlin_count_before: int
+
+
+def _iter_files(paths: Sequence[Path], extensions: tuple[str, ...]) -> Iterable[Path]:
+    for p in paths:
+        if p.is_file():
+            if p.suffix.lower() in extensions:
+                yield p
+            continue
+
+        if p.is_dir():
+            for f in p.rglob("*"):
+                if f.is_dir():
+                    continue
+                if any(
+                    part in {".git", ".venv", "site", "node_modules"}
+                    for part in f.parts
+                ):
+                    continue
+                if f.suffix.lower() in extensions:
+                    yield f
+            continue
+
+
+def _count_gremlins(text: str) -> int:
+    total = 0
+    for codepoint in _TRANSLATIONS.keys():
+        total += text.count(chr(codepoint))
+    return total
+
+
+def _normalise(text: str) -> str:
+    return text.translate(_TRANSLATIONS)
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(
+        description="Replace typographic punctuation (gremlins) with plain ASCII.",
+    )
+    mode = parser.add_mutually_exclusive_group(required=False)
+    mode.add_argument(
+        "--check",
+        action="store_true",
+        help="Do not write changes; exit non-zero if any file would change.",
+    )
+    mode.add_argument(
+        "--write",
+        action="store_true",
+        help="Write changes back to files.",
+    )
+    parser.add_argument(
+        "paths",
+        nargs="*",
+        default=["docs"],
+        help="Files or directories to process (default: docs).",
+    )
+    parser.add_argument(
+        "--extensions",
+        nargs="*",
+        default=list(_DEFAULT_EXTENSIONS),
+        help="File extensions to include (default: .md .markdown).",
+    )
+    args = parser.parse_args(argv)
+
+    check_only = not args.write
+
+    extensions = tuple(e if e.startswith(".") else f".{e}" for e in args.extensions)
+    input_paths = [Path(p) for p in args.paths]
+
+    changes: list[Change] = []
+
+    for file_path in sorted(set(_iter_files(input_paths, extensions))):
+        try:
+            original = file_path.read_text(encoding="utf-8")
+        except (UnicodeDecodeError, OSError):
+            continue
+
+        gremlins_before = _count_gremlins(original)
+        if gremlins_before == 0:
+            continue
+
+        updated = _normalise(original)
+        if updated == original:
+            continue
+
+        changes.append(Change(path=file_path, gremlin_count_before=gremlins_before))
+
+        if not check_only:
+            try:
+                file_path.write_text(updated, encoding="utf-8")
+            except OSError:
+                continue
+
+    if not changes:
+        print("No gremlin characters found.")
+        return 0
+
+    verb = "Would update" if check_only else "Updated"
+    for c in changes:
+        print(f"{verb}: {c.path} ({c.gremlin_count_before} replacements)")
+
+    return 1 if check_only else 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
