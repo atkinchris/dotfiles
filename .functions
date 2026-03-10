@@ -68,9 +68,9 @@ function compose() {
   # shellcheck disable=SC2329
 	function on_exit() {
     if [[ "$stack_started" -eq 1 ]]; then
-      docker-compose stop || true
-      docker-compose kill || true
-      docker-compose rm -vf || true
+      docker compose stop || true
+      docker compose kill || true
+      docker compose rm -vf || true
     fi
 	}
 
@@ -81,11 +81,11 @@ function compose() {
     return 1
   fi
 
-  docker-compose kill || return 1
-  docker-compose rm -vf || return 1
-  docker-compose build || return 1
+  docker compose kill || return 1
+  docker compose rm -vf || return 1
+  docker compose build || return 1
   stack_started=1
-  docker-compose up --remove-orphans "$@" || return 1
+  docker compose up --remove-orphans "$@" || return 1
 }
 
 # =============================================================================
