@@ -184,6 +184,22 @@ function binuninstall() {
   fi
 }
 
+# Zsh completions for binary link helpers
+if [[ -n "${ZSH_VERSION-}" ]]; then
+  function _bininstall() {
+    _arguments \
+      '1:path to executable binary:_files -g "*(-*)"' \
+      '2:link name:'
+  }
+
+  function _binuninstall() {
+    _files -W "$HOME/.local/bin" -g "*(@)"
+  }
+
+  compdef _bininstall bininstall
+  compdef _binuninstall binuninstall
+fi
+
 # Dedupe zsh history
 function dedupHistory() {
 	cp ~/.zsh_history{,-old}
