@@ -97,6 +97,93 @@ function randomstr() {
 	cat /dev/urandom | env LC_CTYPE=C tr -dc a-z | head -c 16; echo
 }
 
+# Install an executable into ~/.local/bin as a symlink
+# Usage: bininstall <path-to-binary> [link-name]
+function bininstall() {
+  local src="$1"
+  local name="$2"
+  local bindir="${HOME}/.local/bin"
+  local abs
+
+  if [[ -z "$src" ]]; then
+    echo "Usage: bininstall <path-to-binary> [link-name]" >&2
+    return 2
+  fi
+
+  # Resolve to absolute path
+  if ! abs="$(cd "$(dirname "$src")" && pwd -P)/$(basename "$src")"; then
+    echo "Error: could not resolve path: $src" >&2
+    return 2
+  fi
+
+  if [[ ! -e "$abs" ]]; then
+    echo "Error: file does not exist: $abs" >&2
+    return 1
+  fi
+
+  if [[ ! -f "$abs" ]]; then
+    echo "Error: not a regular file: $abs" >&2
+    return 1
+  fi
+
+  if [[ ! -x "$abs" ]]; then
+    echo "Error: file is not executable: $abs" >&2
+    return 1
+  fi
+
+  [[ -z "$name" ]] && name="$(basename "$abs")"
+
+  mkdir -p "$bindir" || return 1
+  ln -sfn "$abs" "$bindir/$name" || return 1
+
+  echo "Installed: $bindir/$name -> $abs"
+
+  # Friendly PATH reminder
+  case ":$PATH:" in
+    *":$bindir:"*) ;;
+    *)
+      echo "Note: $bindir is not in PATH for this shell."
+      echo "Add this to ~/.bashrc (or ~/.zshrc):"
+      echo "  export PATH=\"\$HOME/.local/bin:\$PATH\""
+      ;;
+  esac
+}
+
+# Remove a symlinked executable from ~/.local/bin
+# Usage: binuninstall <link-name>
+function binuninstall() {
+  local name="$1"
+  local bindir="${HOME}/.local/bin"
+  local target
+  local current
+
+  if [[ -z "$name" ]]; then
+    echo "Usage: binuninstall <link-name>" >&2
+    return 2
+  fi
+
+  target="$bindir/$name"
+
+  if [[ ! -e "$target" && ! -L "$target" ]]; then
+    echo "Error: no such file: $target" >&2
+    return 1
+  fi
+
+  if [[ ! -L "$target" ]]; then
+    echo "Error: refusing to remove non-symlink: $target" >&2
+    return 1
+  fi
+
+  current=$(readlink "$target" 2>/dev/null || true)
+  rm "$target" || return 1
+
+  if [[ -n "$current" ]]; then
+    echo "Removed: $target -> $current"
+  else
+    echo "Removed: $target"
+  fi
+}
+
 # Dedupe zsh history
 function dedupHistory() {
 	cp ~/.zsh_history{,-old}
