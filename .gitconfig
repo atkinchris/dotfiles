@@ -26,6 +26,10 @@
 
 	# Amend the currently staged files to the latest commit
 	amend = commit --amend --reuse-message=HEAD
+
+  # Lazily add all files and create a commit with the provided message,
+  # skipping the pre-commit and commit-msg hooks, and without opening an editor.
+  ac = commit -anm
 [core]
 	# Make `git rebase` safer on OS X
 	# More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
