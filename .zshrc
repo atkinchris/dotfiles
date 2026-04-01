@@ -27,6 +27,17 @@ fi
 # Set up PATH with proper ordering (most specific first)
 export PATH="$HOME/.local/bin:$HOME/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 
+# If Homebrew binutils is installed, add its bin directory to PATH
+# This makes commands like readelf available without needing to specify the full path,
+# and ensures they take precedence over system versions
+if command -v brew >/dev/null 2>&1; then
+    binutils_prefix="$(brew --prefix binutils 2>/dev/null)"
+    if [[ -n "$binutils_prefix" ]] && [[ ":$PATH:" != *":$binutils_prefix/bin:"* ]]; then
+        export PATH="$binutils_prefix/bin:$PATH"
+    fi
+    unset binutils_prefix
+fi
+
 # Add custom completion definitions for local CLI scripts
 fpath=("$HOME/.local/share/zsh/site-functions" $fpath)
 
