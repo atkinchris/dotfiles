@@ -17,3 +17,4 @@
 ./.yarnrc.yml
 ./.local/bin/
 ./.local/share/zsh/site-functions/
+./.claude/CLAUDE.md
