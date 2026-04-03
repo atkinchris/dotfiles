@@ -53,7 +53,28 @@ if [[ "$TERM_PROGRAM" == "vscode" ]]; then
 fi
 
 # Set default user for prompt
-DEFAULT_USER=$(whoami)
+DEFAULT_USER="$USER"
+
+# Enable Cargo environment if available
+if [[ -f "$HOME/.cargo/env" ]]; then
+    source "$HOME/.cargo/env"
+fi
+
+# Homebrew settings
+# Prevent Homebrew from installing Node, to avoid bringing in unmanaged versions or package managers
+export HOMEBREW_FORBIDDEN_FORMULAE="node"
+
+# =============================================================================
+# APPLICATION-SPECIFIC ENVIRONMENT VARIABLES
+# =============================================================================
+# Disable the pager for GitHub CLI so responses are returned immediately
+export GH_PAGER=
+
+# Enable AWS SDK to load the config from the ~/.aws/config file
+export AWS_SDK_LOAD_CONFIG=1
+
+# Stop here for non-interactive shells; the rest is interactive-only configuration.
+[[ -o interactive ]] || return
 
 # =============================================================================
 # OH MY ZSH FRAMEWORK
@@ -111,26 +132,6 @@ if (( ! IS_IDE_TERMINAL )); then
         eval "$(atuin init zsh)"
     fi
 fi
-
-# Enable Cargo environment if available
-if [[ -f "$HOME/.cargo/env" ]]; then
-    source "$HOME/.cargo/env"
-fi
-
-# Load 1Password CLI plugins if available
-
-# Homebrew settings
-# Prevent Homebrew from installing Node, to avoid bringing in unmanaged versions or package managers
-export HOMEBREW_FORBIDDEN_FORMULAE="node"
-
-# =============================================================================
-# APPLICATION-SPECIFIC ENVIRONMENT VARIABLES
-# =============================================================================
-# Disable the pager for GitHub CLI so responses are returned immediately
-export GH_PAGER=
-
-# Enable AWS SDK to load the config from the ~/.aws/config file
-export AWS_SDK_LOAD_CONFIG=1
 
 # =============================================================================
 # ZSH PROFILING (Optional debugging - must be at bottom)
