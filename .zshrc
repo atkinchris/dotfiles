@@ -44,6 +44,14 @@ fpath=("$HOME/.local/share/zsh/site-functions" $fpath)
 # Load NVM (Node Version Manager) using zsh-nvm plugin and enable lazy loading
 export NVM_LAZY_LOAD=true
 
+# Keep IDE terminals on a simpler, safer zsh path. The integrated terminal
+# has been prone to zle/zpty hangs with some async plugins, so disable only the
+# riskiest interactive features there by default.
+typeset -gi IS_IDE_TERMINAL=0
+if [[ "$TERM_PROGRAM" == "vscode" ]]; then
+    IS_IDE_TERMINAL=1
+fi
+
 # Set default user for prompt
 DEFAULT_USER=$(whoami)
 
@@ -53,7 +61,10 @@ DEFAULT_USER=$(whoami)
 # Oh My Zsh configuration
 export ZSH=~/.oh-my-zsh
 ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(git zoxide zsh-nvm zsh-autocomplete)
+plugins=(git zoxide zsh-nvm)
+if (( ! IS_IDE_TERMINAL )); then
+    plugins+=(zsh-autocomplete)
+fi
 
 # Load Oh My Zsh
 [[ -r "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
@@ -65,8 +76,8 @@ plugins=(git zoxide zsh-nvm zsh-autocomplete)
 # CUSTOM CONFIGURATION (Aliases, functions, etc.)
 # =============================================================================
 # Load custom aliases and functions (ZSH-compatible way)
-# Skip if running in VS Code terminal to prevent issues
-if [[ "$TERM_PROGRAM" != "vscode" ]] && [[ -n "$PS1" ]]; then
+# Skip if running in IDE terminal to prevent issues
+if (( ! IS_IDE_TERMINAL )) && [[ -n "$PS1" ]]; then
     for file in ~/.{aliases,functions,extra}; do
         [[ -r "$file" && -f "$file" ]] && source "$file"
     done
@@ -87,15 +98,18 @@ bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
 # =============================================================================
 # EXTERNAL TOOL INTEGRATIONS
 # =============================================================================
-# Load fzf for history searching
-[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-[[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
-[[ -f /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
+# Load extra interactive shell integrations only outside IDE terminals by default.
+if (( ! IS_IDE_TERMINAL )); then
+    # Load fzf for history searching
+    [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+    [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
+    [[ -f /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
 
-# Enable Atuin shell history management
-if [[ -f "$HOME/.atuin/bin/env" ]]; then
-    source "$HOME/.atuin/bin/env"
-    eval "$(atuin init zsh)"
+    # Enable Atuin shell history management
+    if [[ -f "$HOME/.atuin/bin/env" ]]; then
+        source "$HOME/.atuin/bin/env"
+        eval "$(atuin init zsh)"
+    fi
 fi
 
 # Enable Cargo environment if available
