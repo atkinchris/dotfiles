@@ -1,6 +1,7 @@
 # https://ghostty.org/docs/config
 
-theme = GitHub Dark Default
+# theme = GitHub Dark Default
+theme = Catppuccin Mocha
 
 auto-update = check
 clipboard-write = allow
