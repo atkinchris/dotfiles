@@ -18,3 +18,4 @@
 ./.local/bin/
 ./.local/share/zsh/site-functions/
 ./.claude/CLAUDE.md
+./.config/uv/uv.toml
