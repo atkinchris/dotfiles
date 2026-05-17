@@ -21,3 +21,4 @@
 ./.claude/CLAUDE.md
 ./.config/uv/uv.toml
 ./.config/opencode/tui.json
+./.config/opencode/opencode.json

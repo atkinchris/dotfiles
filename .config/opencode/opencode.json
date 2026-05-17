@@ -1,0 +1,8 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "permission": {
+    "read": { "**/.op.env": "allow" },
+    "edit": { "**/.op.env": "allow" },
+    "external_directory": { "~/Source/**": "allow" }
+  }
+}
