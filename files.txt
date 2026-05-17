@@ -20,3 +20,4 @@
 ./.local/share/zsh/site-functions/
 ./.claude/CLAUDE.md
 ./.config/uv/uv.toml
+./.config/opencode/tui.json
