@@ -8,6 +8,7 @@
   "skills": {
     "paths": ["~/Source/skills"]
   },
+  "plugin": ["superpowers@git+https://github.com/obra/superpowers.git"],
   "provider": {
     "github-copilot": {
       "models": {
