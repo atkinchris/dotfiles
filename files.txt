@@ -22,3 +22,4 @@
 ./.config/uv/uv.toml
 ./.config/opencode/tui.json
 ./.config/opencode/opencode.json
+./.config/crush/crush.json
