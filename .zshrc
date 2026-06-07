@@ -41,9 +41,6 @@ fi
 # Add custom completion definitions for local CLI scripts
 fpath=("$HOME/.local/share/zsh/site-functions" $fpath)
 
-# Load NVM (Node Version Manager) using zsh-nvm plugin and enable lazy loading
-export NVM_LAZY_LOAD=true
-
 # Keep IDE terminals on a simpler, safer zsh path. The integrated terminal
 # has been prone to zle/zpty hangs with some async plugins, so disable only the
 # riskiest interactive features there by default.
