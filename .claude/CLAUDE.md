@@ -1,5 +1,13 @@
 # Agent instructions
 
+## Tools
+
+- If you need Node, use nvm
+
+## Commit style
+
+Check the existing commit history for examples of the style we use for commit messages. In general, prefixes (like `feat:`, `fix:`, etc.) should not be used.
+
 ## Documentation style
 
 ### Punctuation
