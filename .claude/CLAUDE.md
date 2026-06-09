@@ -4,6 +4,10 @@
 
 - If you need Node, use nvm
 
+## GitHub Actions
+
+When writing or modifying GitHub Actions workflows, always check the latest major version of any `actions/*` action before using it. Do not assume the version already in the file is current.
+
 ## Commit style
 
 Check the existing commit history for examples of the style we use for commit messages. In general, prefixes (like `feat:`, `fix:`, etc.) should not be used.
