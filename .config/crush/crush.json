@@ -4,7 +4,8 @@
     "skills_paths": ["~/.agents/skills"],
     "attribution": {
       "trailer_style": "none"
-    }
+    },
+    "auto_lsp": true
   },
   "permissions": {
     "allowed_tools": [
