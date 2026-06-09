@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "lsp": true,
   "permission": {
     "read": { "**/.op.env": "allow" },
     "edit": { "**/.op.env": "allow" },
