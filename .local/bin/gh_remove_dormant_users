@@ -131,7 +131,11 @@ def main() -> int:
                     enterprise_id = get_enterprise_id(args.enterprise)
 
                 print(f"Removing {login} from {args.enterprise}")
-                user_id = get_user_id(login)
+                try:
+                    user_id = get_user_id(login)
+                except RuntimeError:
+                    print(f"Skipping unknown user: {login}")
+                    continue
                 try:
                     remove_enterprise_member(enterprise_id, user_id)
                 except RuntimeError as exc:
