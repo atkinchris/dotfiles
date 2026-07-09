@@ -6,6 +6,8 @@ tap "hashicorp/tap"
 tap "trufflesecurity/trufflehog", trusted: { formulae: ["trufflehog"] }
 # Simple, modern, secure file encryption
 brew "age"
+# Plugin manager for zsh, inspired by antigen and antibody
+brew "antidote"
 # Codec library for encoding and decoding AV1 video streams
 brew "aom"
 # Zstandard is a real-time compression algorithm
@@ -104,6 +106,8 @@ brew "sops"
 brew "squashfs"
 # Proxy server that works as a poor man's VPN
 brew "sshuttle"
+# Cross-shell prompt for astronauts
+brew "starship"
 # Simple TTY terminal I/O application
 brew "tio"
 # Display directories as trees (with optional color/HTML output)

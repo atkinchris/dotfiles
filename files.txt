@@ -9,6 +9,7 @@
 ./.aliases
 ./.hushlogin
 ./.extra
+./.zsh_plugins.txt
 ./.ssh/config
 ./.ssh/allowed_signers
 ./.nvm/default-packages

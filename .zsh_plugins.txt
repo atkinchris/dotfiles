@@ -1,0 +1,9 @@
+# Colours and highlighting
+mattmc3/zephyr path:plugins/color
+
+# Menu autocompletion
+mattmc3/zephyr path:plugins/completion
+mattmc3/zephyr path:plugins/compstyle
+
+# NVM loading
+lukechilds/zsh-nvm

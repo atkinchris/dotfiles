@@ -16,6 +16,19 @@ setopt NO_NOMATCH
 # Set history options for better deduplication
 setopt HIST_IGNORE_ALL_DUPS
 
+# Move to directories without cd (i.e. `cd somedir` can be replaced with `somedir`)
+setopt AUTOCD
+
+# Expands .... to ../..
+function dot-expansion {
+  if [[ $LBUFFER = *.. ]]; then
+    LBUFFER+='/..'
+  else
+    LBUFFER+='.'
+  fi
+}
+zle -N dot-expansion
+
 # =============================================================================
 # ENVIRONMENT SETUP (Before loading frameworks/plugins)
 # =============================================================================
@@ -77,21 +90,26 @@ export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS
 [[ -o interactive ]] || return
 
 # =============================================================================
-# OH MY ZSH FRAMEWORK
+# EXTERNAL TOOL INTEGRATIONS
 # =============================================================================
-# Oh My Zsh configuration
-export ZSH=~/.oh-my-zsh
-ZSH_THEME="powerlevel10k/powerlevel10k"
-plugins=(git zoxide zsh-nvm)
+# Load extra interactive shell integrations only outside IDE terminals by default.
 if (( ! IS_IDE_TERMINAL )); then
-    plugins+=(zsh-autocomplete)
+    # Load ZSH plugins from ~/.zsh_plugins.txt
+    source $(brew --prefix)/opt/antidote/share/antidote/antidote.zsh
+    antidote load
+
+    # Enable Atuin shell history management
+    if [[ -f "$HOME/.atuin/bin/env" ]]; then
+        source "$HOME/.atuin/bin/env"
+        eval "$(atuin init zsh)"
+    fi
+
+    # # Set up zoxide to move between folders efficiently
+    eval "$(zoxide init zsh)"
+
+    # # Set up the Starship prompt
+    eval "$(starship init zsh)"
 fi
-
-# Load Oh My Zsh
-[[ -r "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
-
-# Load Powerlevel10k configuration
-[[ -r ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
 # =============================================================================
 # CUSTOM CONFIGURATION (Aliases, functions, etc.)
@@ -103,34 +121,6 @@ if (( ! IS_IDE_TERMINAL )) && [[ -n "$PS1" ]]; then
         [[ -r "$file" && -f "$file" ]] && source "$file"
     done
     unset file
-fi
-
-# =============================================================================
-# KEY BINDINGS & COMPLETION
-# =============================================================================
-# Make Tab and ShiftTab go to the menu
-bindkey              '^I' menu-select
-bindkey "$terminfo[kcbt]" menu-select
-
-# Make Tab and ShiftTab change the selection in the menu
-bindkey -M menuselect              '^I'         menu-complete
-bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
-
-# =============================================================================
-# EXTERNAL TOOL INTEGRATIONS
-# =============================================================================
-# Load extra interactive shell integrations only outside IDE terminals by default.
-if (( ! IS_IDE_TERMINAL )); then
-    # Load fzf for history searching
-    [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
-    [[ -f /usr/share/doc/fzf/examples/key-bindings.zsh ]] && source /usr/share/doc/fzf/examples/key-bindings.zsh
-    [[ -f /usr/share/doc/fzf/examples/completion.zsh ]] && source /usr/share/doc/fzf/examples/completion.zsh
-
-    # Enable Atuin shell history management
-    if [[ -f "$HOME/.atuin/bin/env" ]]; then
-        source "$HOME/.atuin/bin/env"
-        eval "$(atuin init zsh)"
-    fi
 fi
 
 # =============================================================================
