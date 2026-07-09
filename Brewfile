@@ -86,8 +86,6 @@ brew "k9s"
 brew "minicom"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
-# Generic machine emulator and virtualizer
-brew "qemu"
 # Reverse engineering framework
 brew "radare2"
 # Fast, efficient and secure backup program
@@ -102,8 +100,6 @@ brew "ruff"
 brew "shellcheck"
 # Editor of encrypted files
 brew "sops"
-# Microsoft SQL Server command-line interface
-brew "sqlcmd"
 # Compressed read-only file system for Linux
 brew "squashfs"
 # Proxy server that works as a poor man's VPN
