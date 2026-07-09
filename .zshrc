@@ -70,6 +70,9 @@ export GH_PAGER=
 # Enable AWS SDK to load the config from the ~/.aws/config file
 export AWS_SDK_LOAD_CONFIG=1
 
+# Set Puppeteer to use the system-installed Google Chrome instead of downloading Chromium
+export PUPPETEER_EXECUTABLE_PATH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
+
 # Stop here for non-interactive shells; the rest is interactive-only configuration.
 [[ -o interactive ]] || return
 
