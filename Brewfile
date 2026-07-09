@@ -160,6 +160,8 @@ cask "font-hack-nerd-font"
 cask "font-monaspace"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
+# Cross-platform Git credential storage for multiple hosting providers
+cask "git-credential-manager"
 # Free and open-source media player
 cask "iina"
 # Open-source cross-platform alternative to AirDrop
