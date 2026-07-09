@@ -1,6 +1,7 @@
 tap "1password/tap", trusted: true
 tap "anomalyco/tap", trusted: true
 tap "charmbracelet/tap", trusted: true
+tap "gentleman-programming/tap"
 tap "hashicorp/tap", trusted: true
 tap "trufflesecurity/trufflehog", trusted: true
 # Simple, modern, secure file encryption
@@ -138,7 +139,9 @@ brew "zsh-completions"
 # The AI coding agent built for the terminal.
 brew "anomalyco/tap/opencode"
 # A powerful terminal-based AI assistant for developers, providing intelligent coding assistance directly in your terminal.
-brew "charmbracelet/tap/crush"
+brew "charmbracelet/tap/crush", trusted: true
+# Persistent memory for AI coding agents. Agent-agnostic, single binary, zero dependencies.
+brew "gentleman-programming/tap/engram", trusted: true
 # Terraform
 brew "hashicorp/tap/terraform"
 # Command-line interface for 1Password
