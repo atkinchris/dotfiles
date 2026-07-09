@@ -1,9 +1,9 @@
-tap "1password/tap", trusted: true
-tap "anomalyco/tap", trusted: true
-tap "charmbracelet/tap", trusted: true
+tap "1password/tap", trusted: { casks: ["1password-cli"] }
+tap "anomalyco/tap"
+tap "charmbracelet/tap"
 tap "gentleman-programming/tap"
-tap "hashicorp/tap", trusted: true
-tap "trufflesecurity/trufflehog", trusted: true
+tap "hashicorp/tap"
+tap "trufflesecurity/trufflehog", trusted: { formulae: ["trufflehog"] }
 # Simple, modern, secure file encryption
 brew "age"
 # Codec library for encoding and decoding AV1 video streams
@@ -133,13 +133,13 @@ brew "zsh-autocomplete"
 # Additional completion definitions for zsh
 brew "zsh-completions"
 # The AI coding agent built for the terminal.
-brew "anomalyco/tap/opencode"
+brew "anomalyco/tap/opencode", trusted: true
 # A powerful terminal-based AI assistant for developers, providing intelligent coding assistance directly in your terminal.
 brew "charmbracelet/tap/crush", trusted: true
 # Persistent memory for AI coding agents. Agent-agnostic, single binary, zero dependencies.
 brew "gentleman-programming/tap/engram", trusted: true
 # Terraform
-brew "hashicorp/tap/terraform"
+brew "hashicorp/tap/terraform", trusted: true
 # Command-line interface for 1Password
 cask "1password-cli"
 # Android SDK component
