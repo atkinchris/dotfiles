@@ -1,0 +1,190 @@
+#!/usr/bin/env python3
+
+# Export all Apple Notes to individual Markdown files
+# Usage: export_apple_notes [directory]
+#
+# Defaults to the current directory if no path is given.
+# Filenames use the note's creation date: apple-notes-2024-03-15T09-30-00.md
+# Requires: pandoc
+
+from __future__ import annotations
+
+import os
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+# Typographic gremlin replacements (shared with degremlinise)
+_GREMLIN_TABLE: dict[int, str] = {
+    0x2018: "'", 0x2019: "'", 0x201B: "'", 0x2032: "'",
+    0x201C: '"', 0x201D: '"', 0x201E: '"', 0x201F: '"', 0x2033: '"',
+    0x2010: "-", 0x2011: "-", 0x2012: "-", 0x2013: "-",
+    0x2014: "-", 0x2015: "-", 0x2212: "-",
+    0x00A0: " ", 0x202F: " ",
+    0x200B: "", 0x200C: "", 0x200D: "", 0x2060: "", 0xFEFF: "",
+}
+
+# AppleScript that writes each note's HTML to a temp file and prints a manifest
+# line per note: dateStr<TAB>title<TAB>tempFilePath
+_APPLESCRIPT_TEMPLATE = """
+set tmpDir to "{tmp_dir}"
+set noteIndex to 0
+tell application "Notes"
+  repeat with n in every note
+    set noteContainer to container of n
+    set noteFolder to name of noteContainer
+
+    if noteFolder is not "Recently Deleted" then
+      set noteTitle to the name of n
+      set noteHTML to the body of n
+      set noteDate to the creation date of n
+
+      set y to year of noteDate as integer
+      set m to month of noteDate as integer
+      set d to day of noteDate as integer
+      set h to hours of noteDate as integer
+      set mn to minutes of noteDate as integer
+      set s to seconds of noteDate as integer
+
+      set dateStr to "" & y & "-" & text -2 thru -1 of ("0" & m) & "-" & text -2 thru -1 of ("0" & d) & "T" & text -2 thru -1 of ("0" & h) & "-" & text -2 thru -1 of ("0" & mn) & "-" & text -2 thru -1 of ("0" & s)
+
+      set noteIndex to noteIndex + 1
+      set tmpFile to tmpDir & "/note-" & (noteIndex as text) & ".html"
+
+      set fileRef to open for access tmpFile with write permission
+      set eof fileRef to 0
+      write noteHTML to fileRef as \u00ABclass utf8\u00BB
+      close access fileRef
+
+      log dateStr & tab & noteTitle & tab & tmpFile
+    end if
+  end repeat
+end tell
+"""
+
+
+def html_to_markdown(html: str) -> str:
+    """Convert Apple Notes HTML to Markdown via pandoc.
+
+    Pre-processes the HTML to normalise Apple Notes' <div> wrappers into
+    <p> tags so pandoc preserves paragraph structure, then strips the
+    first h1 (the title, which we add ourselves).
+    """
+    # Convert <div><br></div> (blank lines) to paragraph breaks
+    html = html.replace("<div><br></div>", "<p></p>")
+    # Strip the first h1 (title) - handles both <h1>text</h1> and <h1><br></h1>
+    html = re.sub(r"<div><h1>.*?</h1></div>", "", html, count=1)
+    # Convert remaining div wrappers to p tags
+    html = html.replace("<div>", "<p>").replace("</div>", "</p>")
+
+    result = subprocess.run(
+        ["pandoc", "-f", "html", "-t", "commonmark", "--wrap=none"],
+        input=html,
+        capture_output=True,
+        text=True,
+    )
+    return result.stdout.strip()
+
+
+def fetch_notes(tmp_dir: str) -> list[dict]:
+    """Fetch all non-deleted notes via osascript.
+
+    AppleScript writes each note's HTML body to a temp file and logs a
+    manifest line (date, title, path) to stderr.
+    """
+    script = _APPLESCRIPT_TEMPLATE.format(tmp_dir=tmp_dir)
+    result = subprocess.run(
+        ["osascript", "-e", script],
+        capture_output=True,
+        text=True,
+        timeout=120,
+    )
+    if result.returncode != 0:
+        print(
+            f"Error: failed to query Apple Notes.\n{result.stderr}",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
+    notes = []
+    # osascript `log` writes to stderr
+    for line in result.stderr.strip().splitlines():
+        parts = line.split("\t", 2)
+        if len(parts) != 3:
+            continue
+        date_str, title, tmp_path = parts
+        notes.append({"date": date_str, "title": title, "tmp_path": tmp_path})
+
+    return notes
+
+
+def export_notes(directory: str) -> None:
+    """Export all notes to the given directory."""
+    with tempfile.TemporaryDirectory(prefix="apple-notes-") as tmp_dir:
+        notes = fetch_notes(tmp_dir)
+        count = 0
+
+        for note in notes:
+            title = note["title"]
+            date_str = note["date"]
+            tmp_path = note["tmp_path"]
+
+            html = Path(tmp_path).read_text(encoding="utf-8")
+            body = html_to_markdown(html).translate(_GREMLIN_TABLE)
+            title = title.translate(_GREMLIN_TABLE)
+
+            if not title and not body:
+                continue
+
+            filename = f"apple-notes-{date_str}.md"
+            filepath = os.path.join(directory, filename)
+
+            # Handle duplicate timestamps
+            if os.path.exists(filepath):
+                suffix = 2
+                while os.path.exists(
+                    os.path.join(
+                        directory, f"apple-notes-{date_str}-{suffix}.md"
+                    )
+                ):
+                    suffix += 1
+                filepath = os.path.join(
+                    directory, f"apple-notes-{date_str}-{suffix}.md"
+                )
+
+            with open(filepath, "w", encoding="utf-8") as f:
+                if title:
+                    f.write(f"# {title}\n\n{body}\n")
+                else:
+                    f.write(f"{body}\n")
+            count += 1
+
+    skipped = len(notes) - count
+    print(f"Exported {count} notes to {directory}")
+    if skipped > 0:
+        print(f"Skipped {skipped} empty notes.")
+
+
+def main() -> int:
+    if not shutil.which("pandoc"):
+        print(
+            "Error: pandoc is required. Install with: brew install pandoc",
+            file=sys.stderr,
+        )
+        return 1
+
+    directory = sys.argv[1] if len(sys.argv) > 1 else os.getcwd()
+
+    if not os.path.isdir(directory):
+        print(f"Error: not a directory: {directory}", file=sys.stderr)
+        return 1
+
+    export_notes(directory)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
