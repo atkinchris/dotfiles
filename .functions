@@ -488,8 +488,9 @@ function gh_saml_lookup() {
 # APPLE NOTES
 # =============================================================================
 
-# Export all Apple Notes to individual Markdown files in the current directory
-# Filenames use the note's creation date: apple-notes-2024-03-15T09-30-00.md
+# Export all Apple Notes to individual Markdown files
+# Usage: export_apple_notes [directory]
+# Defaults to the current directory if no path is given.
 # Requires: pandoc
 function export_apple_notes() {
   if ! command -v pandoc &>/dev/null; then
@@ -497,8 +498,12 @@ function export_apple_notes() {
     return 1
   fi
 
-  local dir
-  dir=$(pwd)
+  local dir="${1:-$(pwd)}"
+
+  if [[ ! -d "$dir" ]]; then
+    echo "Error: not a directory: $dir" >&2
+    return 1
+  fi
 
   # AppleScript writes one line per note: title<RS>dateStr<RS>htmlBody
   # Using ASCII record separator (0x1E) as field delimiter and
