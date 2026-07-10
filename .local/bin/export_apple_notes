@@ -139,20 +139,27 @@ def export_notes(directory: str) -> None:
             if not title and not body:
                 continue
 
+            # Parse date components for directory structure
+            # date_str format: 2024-03-15T09-30-00
+            year_month = date_str[:7]  # 2024-03
+
+            note_dir = os.path.join(directory, year_month)
+            os.makedirs(note_dir, exist_ok=True)
+
             filename = f"apple-notes-{date_str}.md"
-            filepath = os.path.join(directory, filename)
+            filepath = os.path.join(note_dir, filename)
 
             # Handle duplicate timestamps
             if os.path.exists(filepath):
                 suffix = 2
                 while os.path.exists(
                     os.path.join(
-                        directory, f"apple-notes-{date_str}-{suffix}.md"
+                        note_dir, f"apple-notes-{date_str}-{suffix}.md"
                     )
                 ):
                     suffix += 1
                 filepath = os.path.join(
-                    directory, f"apple-notes-{date_str}-{suffix}.md"
+                    note_dir, f"apple-notes-{date_str}-{suffix}.md"
                 )
 
             with open(filepath, "w", encoding="utf-8") as f:
