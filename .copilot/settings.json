@@ -1,0 +1,9 @@
+{
+  "renderMarkdown": true,
+  "screenReader": false,
+  "theme": "auto",
+  "model": "gpt-5.6-terra",
+  "allowedUrls": [
+    "https://learn.microsoft.com"
+  ]
+}

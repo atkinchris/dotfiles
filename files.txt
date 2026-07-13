@@ -25,3 +25,4 @@
 ./.config/opencode/opencode.json
 ./.config/crush/crush.json
 ./.config/starship.toml
+./.copilot/settings.json
