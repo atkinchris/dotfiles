@@ -86,6 +86,8 @@ brew "jq"
 brew "k9s"
 # Menu-driven communications program
 brew "minicom"
+# OpenBSD freely-licensed SSH connectivity tools
+brew "openssh"
 # Package compiler and linker metadata toolkit
 brew "pkgconf"
 # Reverse engineering framework
