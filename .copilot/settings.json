@@ -1,9 +1,50 @@
 {
+  "banner": "never",
   "renderMarkdown": true,
   "screenReader": false,
   "theme": "auto",
-  "model": "gpt-5.6-terra",
+  "keepAlive": "busy",
+  "ide": {
+    "autoConnect": false
+  },
+  "includeCoAuthoredBy": false,
   "allowedUrls": [
+    "http://www.gitclear.com",
+    "https://api.github.com",
+    "https://arxiv.org",
+    "https://aws.amazon.com",
+    "https://coderabbit.ai",
+    "https://dl.acm.org",
+    "https://docs.github.com",
+    "https://engineering.fb.com",
+    "https://gitclear.com",
+    "https://github.blog",
+    "https://github.com",
+    "https://learn.microsoft.com",
+    "https://nvd.nist.gov",
+    "https://platform.claude.com",
+    "https://raw.githubusercontent.com",
+    "https://research.google",
+    "https://techcommunity.microsoft.com",
+    "https://www.coderabbit.ai",
+    "https://www.diffblue.com",
     "https://learn.microsoft.com"
-  ]
+  ],
+  "enabledPlugins": {
+    "skills@sainsburys-tech-skills": true
+  },
+  "model": "gpt-5.6-terra",
+  "extraKnownMarketplaces": {
+    "sainsburys-tech-skills": {
+      "source": {
+        "source": "github",
+        "repo": "sainsburys-tech/skills"
+      }
+    }
+  },
+  "tabs": {
+    "enabled": false
+  },
+  "bashEnv": false,
+  "disabledSkills": []
 }
