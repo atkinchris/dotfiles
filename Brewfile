@@ -1,6 +1,5 @@
 tap "1password/tap", trusted: { casks: ["1password-cli"] }
 tap "anomalyco/tap"
-tap "charmbracelet/tap"
 tap "gentleman-programming/tap"
 tap "hashicorp/tap"
 tap "trufflesecurity/trufflehog", trusted: { formulae: ["trufflehog"] }
@@ -140,8 +139,6 @@ brew "zsh-autocomplete"
 brew "zsh-completions"
 # The AI coding agent built for the terminal.
 brew "anomalyco/tap/opencode", trusted: true
-# A powerful terminal-based AI assistant for developers, providing intelligent coding assistance directly in your terminal.
-brew "charmbracelet/tap/crush", trusted: true
 # Persistent memory for AI coding agents. Agent-agnostic, single binary, zero dependencies.
 brew "gentleman-programming/tap/engram", trusted: true
 # Terraform
