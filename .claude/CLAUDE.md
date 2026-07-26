@@ -14,6 +14,8 @@ Check the existing commit history for examples of the style we use for commit me
 
 ## Documentation style
 
+Don't use emojis.
+
 ### Punctuation
 
 Use only ASCII punctuation throughout all Markdown documents.
@@ -41,4 +43,4 @@ Every fenced code block must have a language tag.
 
 ```
 
-Common tags used in this repo: `sh`, `text`.
+Common tags used: `sh`, `text`.
