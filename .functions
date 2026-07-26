@@ -24,6 +24,7 @@ function o() {
 
 # Create a new directory and enter it
 function mkd() {
+  : "${1:?Usage: mkd <directory> [directory...]}"
   mkdir -p "$@" && cd "$_" || return
 }
 
@@ -41,6 +42,7 @@ function dockerclean() {
 
 # Start an interactive Docker container with the present directory mounted
 function dkr() {
+  : "${1:?Usage: dkr <image> [command...]}"
   docker run -v "$(pwd):/workdir" -w /workdir -it --rm "$@"
 }
 
@@ -97,12 +99,15 @@ function randomstr() {
 	cat /dev/urandom | env LC_CTYPE=C tr -dc a-z | head -c 16; echo
 }
 
-# Install an executable into ~/.local/bin as a symlink
+# Location for user-installed executable symlinks; override by exporting DOTFILES_BIN
+: "${DOTFILES_BIN:=$HOME/.local/bin}"
+
+# Install an executable into $DOTFILES_BIN as a symlink
 # Usage: bininstall <path-to-binary> [link-name]
 function bininstall() {
   local src="$1"
   local name="$2"
-  local bindir="${HOME}/.local/bin"
+  local bindir="$DOTFILES_BIN"
   local abs
 
   if [[ -z "$src" ]]; then
@@ -149,11 +154,11 @@ function bininstall() {
   esac
 }
 
-# Remove a symlinked executable from ~/.local/bin
+# Remove a symlinked executable from $DOTFILES_BIN
 # Usage: binuninstall <link-name>
 function binuninstall() {
   local name="$1"
-  local bindir="${HOME}/.local/bin"
+  local bindir="$DOTFILES_BIN"
   local target
   local current
 
@@ -193,7 +198,7 @@ if [[ -n "${ZSH_VERSION-}" ]]; then
   }
 
   function _binuninstall() {
-    _files -W "$HOME/.local/bin" -g "*(@)"
+    _files -W "$DOTFILES_BIN" -g "*(@)"
   }
 
   compdef _bininstall bininstall
@@ -218,8 +223,9 @@ function restartWifi() {
 # Send a command to a device and cat the output
 # Usage: send <device> <baud_rate> <command>
 function send() {
-	local DEVICE=$1; shift
-	local BAUD=$1; shift
+	local DEVICE="${1:?Usage: send <device> <baud_rate> <command>}"; shift
+	local BAUD="${1:?Usage: send <device> <baud_rate> <command>}"; shift
+  : "${1:?Usage: send <device> <baud_rate> <command>}"
 
   cat "$DEVICE" &
   stty -f "$DEVICE" "$BAUD"
@@ -247,6 +253,7 @@ function launchctlAll() {
 # Usage: launchctlFind <search_term>
 # https://stackoverflow.com/questions/18502705/how-to-know-a-specific-launchd-plist-file-location
 function launchctlFind() {
+    : "${1:?Usage: launchctlFind <search_term>}"
     local LaunchctlPATHS=( \
         ~/Library/LaunchAgents \
         /Library/LaunchAgents \
@@ -269,13 +276,14 @@ function launchctlFind() {
 # Tests for token validity
 # Usage: test_github_scopes <token>
 function test_github_scopes() {
+  local token="${1:?Usage: test_github_scopes <token>}"
   local login
   local headers
   local scopes
   local expiration
 
-  login=$(curl -sS -H "Authorization: token $1" https://api.github.com/user | jq -r .login)
-  headers=$(curl -sS -f -I -H "Authorization: token $1" https://api.github.com)
+  login=$(curl -sS -H "Authorization: token $token" https://api.github.com/user | jq -r .login)
+  headers=$(curl -sS -f -I -H "Authorization: token $token" https://api.github.com)
   scopes=$(printf "%s\n" "$headers" | grep -i '^x-oauth-scopes:' | cut -d' ' -f2- | tr -d "[:space:]")
   expiration=$(printf "%s\n" "$headers" | grep -i '^github-authentication-token-expiration:' | cut -d' ' -f2- | tr -d "[:space:]")
 
@@ -334,8 +342,8 @@ function revoke_github_token() {
 # Mirror and bundle a GitHub repository
 # Usage: bundle_github <repo_url> <output_name>
 function bundle_github() {
-	local url=$1
-	local output=$2
+	local url="${1:?Usage: bundle_github <repo_url> <output_name>}"
+	local output="${2:?Usage: bundle_github <repo_url> <output_name>}"
   local repo_dir
   repo_dir=$(basename "$url")
 
@@ -387,26 +395,27 @@ function github_crypt() {
 # Archive a GitHub repository
 # Usage: gh_archive <org> <repo>
 function gh_archive() {
-  local org=$1
-  local repo=$2
+  local org="${1:?Usage: gh_archive <org> <repo>}"
+  local repo="${2:?Usage: gh_archive <org> <repo>}"
   gh repo archive -y "$org/$repo"
 }
 
 # Delete a GitHub repository
 # Usage: gh_delete <org> <repo>
 function gh_delete() {
-  local org=$1
-  local repo=$2
+  local org="${1:?Usage: gh_delete <org> <repo>}"
+  local repo="${2:?Usage: gh_delete <org> <repo>}"
   gh repo delete --yes "$org/$repo"
 }
 
 # Add a team to a GitHub repository
 # Usage: gh_add_team <org> <repo> <team_slug> <permission>
 function gh_add_team() {
-  local org=$1
-	local repo=$2
-	local team_slug=$3
-  local permission=$4
+  local usage="Usage: gh_add_team <org> <repo> <team_slug> <permission>"
+  local org="${1:?$usage}"
+	local repo="${2:?$usage}"
+	local team_slug="${3:?$usage}"
+  local permission="${4:?$usage}"
 
   gh api \
     --method PUT \
@@ -417,10 +426,11 @@ function gh_add_team() {
 # Add a collaborator to a GitHub repository
 # Usage: gh_add_collaborator <org> <repo> <collaborator> <permission>
 function gh_add_collaborator() {
-  local org=$1
-  local repo=$2
-  local collaborator=$3
-  local permission=$4
+  local usage="Usage: gh_add_collaborator <org> <repo> <collaborator> <permission>"
+  local org="${1:?$usage}"
+  local repo="${2:?$usage}"
+  local collaborator="${3:?$usage}"
+  local permission="${4:?$usage}"
 
   gh api \
     --method PUT \
@@ -431,8 +441,8 @@ function gh_add_collaborator() {
 # Remove a user from a GitHub enterprise
 # Usage: gh_remove_user <enterprise> <user>
 function gh_remove_user() {
-  local enterprise=$1
-  local user=$2
+  local enterprise="${1:?Usage: gh_remove_user <enterprise> <user>}"
+  local user="${2:?Usage: gh_remove_user <enterprise> <user>}"
   local user_id
   local enterprise_id
 
@@ -462,9 +472,10 @@ mutation($enterprise:ID!, $user:ID!) {
 # Add a repo to a GitHub app installation
 # Usage: gh_app_add <installationId> <org> <repo>
 function gh_app_add() {
-  local installationId=$1
-  local org=$2
-  local repo=$3
+  local usage="Usage: gh_app_add <installationId> <org> <repo>"
+  local installationId="${1:?$usage}"
+  local org="${2:?$usage}"
+  local repo="${3:?$usage}"
   local repoId
 
   repoId=$(gh api "/repos/$org/$repo" | jq -r .id)
