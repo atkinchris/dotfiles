@@ -10,7 +10,7 @@ When writing or modifying GitHub Actions workflows, always check the latest majo
 
 ## Commit style
 
-Check the existing commit history for examples of the style we use for commit messages. In general, prefixes (like `feat:`, `fix:`, etc.) should not be used.
+Match the commit message style already in the repo's history. Where the history is mixed or absent, don't use prefixes like `feat:` or `fix:`.
 
 ## Documentation style
 
@@ -34,13 +34,3 @@ Examples: `behaviour`, `behavioural`, `labelled`, `artefact`, `localised`, `whil
 ### Code fences
 
 Every fenced code block must have a language tag.
-
-```text
-
-```
-
-```sh
-
-```
-
-Common tags used: `sh`, `text`.
