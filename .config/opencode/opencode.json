@@ -13,7 +13,7 @@
     "edit": { "**/.op.env": "allow" },
     "external_directory": { "~/Source/**": "allow" }
   },
-  "plugin": ["superpowers@git+https://github.com/atkinchris/superpowers.git", "opencode-agent-memory@latest"],
+  "plugin": ["opencode-agent-memory@latest"],
   "skills": {
     "paths": ["~/Source/skills"]
   }
