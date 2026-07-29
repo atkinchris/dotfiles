@@ -4,6 +4,14 @@
 
 - If you need Node, use nvm
 
+## Changes to existing code
+
+Every changed line should trace to what I asked for. Don't improve adjacent code, comments, or formatting on the way past. Match the surrounding style even where you'd do it differently. Mention unrelated dead code rather than deleting it; do remove imports and helpers your change orphaned.
+
+## Ambiguity
+
+If there are several plausible readings of a request, say so and ask rather than picking one silently. I'd rather be interrupted than have to unwind a change.
+
 ## GitHub Actions
 
 When writing or modifying GitHub Actions workflows, always check the latest major version of any `actions/*` action before using it. Do not assume the version already in the file is current.
