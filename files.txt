@@ -20,9 +20,12 @@
 ./.local/bin/
 ./.local/share/zsh/site-functions/
 ./.claude/CLAUDE.md
+./.config/agents/AGENTS.md
 ./.config/uv/uv.toml
 ./.config/opencode/tui.json
+./.config/opencode/AGENTS.md
 ./.config/opencode/opencode.json
 ./.config/crush/crush.json
 ./.config/starship.toml
 ./.copilot/settings.json
+./.copilot/copilot-instructions.md
