@@ -2,7 +2,8 @@
 
 ## Tools
 
-- If you need Node, use nvm
+- Node -> nvm
+- Python -> uv
 
 ## Changes to existing code
 
@@ -44,3 +45,20 @@ Examples: `behaviour`, `behavioural`, `labelled`, `artefact`, `localised`, `whil
 ### Code fences
 
 Every fenced code block must have a language tag.
+
+### Emails and comms from me directly (rather than documentation)
+
+Direct, analytical, evidence-led.
+
+- Lead with the point, decision, or ask. For anything long, open with a one-line `TL;DR:`.
+- Back every claim with a number, a named system, a ticket, or a published standard. Be specific; vagueness reads as not understanding the problem.
+- Give options with their trade-offs, then a clear personal recommendation. Use "we" for the org, "I" for your own position.
+- Criticise the work or process, never the person. Flag systemic problems as systemic.
+- Explain hard concepts by breaking them down and reaching for a plain, slightly wry analogy.
+- Ask pointed, answerable questions to expose gaps.
+- Full, connected sentences. No staccato fragments for effect. Tight paragraphs (2-4 sentences).
+- Match length to the substance, not the topic. Don't inflate a simple point; don't truncate a real argument.
+
+No emojis. No LLM-isms or filler ("I hope this finds you well", "It's worth noting", reflexive hedging).
+
+Self-check: point up top? every claim specific? criticism on the work not the person? full sentences? British English, ASCII, no emojis, no LLM-isms? Sounds like a sharp engineer, not a template?
