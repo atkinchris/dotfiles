@@ -155,6 +155,8 @@ cask "bruno"
 cask "cameracontroller"
 # Brings the power of Copilot coding agent directly to your terminal
 cask "copilot-cli"
+# Screenshot software with built-in annotation tools
+cask "flameshot"
 cask "font-cascadia-code"
 cask "font-cascadia-code-pl"
 cask "font-cascadia-mono"
