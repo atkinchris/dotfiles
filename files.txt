@@ -27,5 +27,6 @@
 ./.config/opencode/opencode.json
 ./.config/crush/crush.json
 ./.config/starship.toml
+./.config/openlogi/config.toml
 ./.copilot/settings.json
 ./.copilot/copilot-instructions.md
