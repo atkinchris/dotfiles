@@ -171,5 +171,7 @@ cask "iina"
 cask "localsend"
 # Clipboard manager
 cask "maccy"
+# Local-first alternative to Logitech Options+ for HID++ devices
+cask "openlogi"
 # Multimedia player
 cask "vlc"
