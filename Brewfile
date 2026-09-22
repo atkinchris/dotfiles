@@ -1,5 +1,8 @@
 tap "1password/tap", trusted: { casks: ["1password-cli"] }
 tap "anomalyco/tap"
+tap "atlassian/acli"
+tap "azure/azd", trusted: { casks: ["azd"] }
+tap "can1357/tap"
 tap "gentleman-programming/tap"
 tap "hashicorp/tap"
 tap "trufflesecurity/trufflehog", trusted: { formulae: ["trufflehog"] }
@@ -11,16 +14,20 @@ brew "antidote"
 brew "aom"
 # Zstandard is a real-time compression algorithm
 brew "zstd"
+# TIFF library and utilities
+brew "libtiff"
 # Development kit for the Java programming language
 brew "openjdk"
 # Tool for reverse engineering 3rd party, closed, binary Android apps
 brew "apktool"
 # Automatic configure script builder
 brew "autoconf"
-# Use AWS IAM credentials to authenticate to Kubernetes
-brew "aws-iam-authenticator"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@3"
+# Use AWS IAM credentials to authenticate to Kubernetes
+brew "aws-iam-authenticator"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.14"
 # Official Amazon AWS command-line interface
 brew "awscli"
 # Azure Storage data transfer utility
@@ -31,12 +38,16 @@ brew "azure-cli"
 brew "bash"
 # GNU binary tools for native development
 brew "binutils"
+# 7-Zip (high compression file archiver) implementation
+brew "p7zip"
 # Searches a binary image for embedded files and executable code
 brew "binwalk"
 # Toolchain of the web
 brew "biome"
 # Roguelike game
 brew "brogue"
+# Cloudflare Tunnel client (formerly Argo Tunnel)
+brew "cloudflared"
 # Cross-platform make
 brew "cmake"
 # GNU File, Shell, and Text utilities
@@ -69,6 +80,8 @@ brew "git-lfs"
 brew "libusb"
 # GNU Privacy Guard (OpenPGP)
 brew "gnupg"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
 # Kubernetes package manager
 brew "helm"
 # Configurable static site generator
@@ -99,8 +112,8 @@ brew "ripgrep"
 brew "rsync"
 # Extremely fast Python linter, written in Rust
 brew "ruff"
-# Static analysis and lint tool, for (ba)sh scripts
-brew "shellcheck"
+# Export Slack data without admin privileges
+brew "slackdump"
 # Editor of encrypted files
 brew "sops"
 # Compressed read-only file system for Linux
@@ -114,7 +127,7 @@ brew "tio"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Find and verify credentials
-brew "trufflehog"
+brew "trufflehog", link: false
 # Markup-based typesetting system
 brew "typst"
 # Universal boot loader
@@ -139,6 +152,10 @@ brew "zsh-autocomplete"
 brew "zsh-completions"
 # The AI coding agent built for the terminal.
 brew "anomalyco/tap/opencode", trusted: true
+# Software to interact with Atlassian Cloud from the terminal
+brew "atlassian/acli/acli", trusted: true
+# Coding agent with the IDE wired in
+brew "can1357/tap/omp", trusted: true
 # Persistent memory for AI coding agents. Agent-agnostic, single binary, zero dependencies.
 brew "gentleman-programming/tap/engram", trusted: true
 # Terraform
