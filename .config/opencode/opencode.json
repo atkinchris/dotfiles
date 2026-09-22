@@ -8,6 +8,15 @@
       "type": "local"
     }
   },
+  "provider": {
+    "amazon-bedrock": {
+      "options": {
+        "region": "eu-west-1",
+        "profile": "default"
+      },
+      "whitelist": ["eu.amazon.nova-micro-v1:0", "eu.amazon.nova-lite-v1:0", "eu.amazon.nova-pro-v1:0"]
+    }
+  },
   "permission": {
     "read": { "**/.op.env": "allow" },
     "edit": { "**/.op.env": "allow" },
