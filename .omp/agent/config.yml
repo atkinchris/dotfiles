@@ -1,0 +1,26 @@
+modelRoles:
+  default: github-copilot/gpt-6-luna
+  advisor: github-copilot/gpt-6-sol:auto
+symbolPreset: nerd
+theme:
+  dark: dark-catppuccin
+setupVersion: 2
+advisor:
+  enabled: true
+  syncBacklog: "1"
+defaultThinkingLevel: auto
+statusLine:
+  preset: default
+startup:
+  showSplash: true
+  quiet: true
+power:
+  sleepPrevention: display
+memory:
+  backend: mnemopi
+autolearn:
+  enabled: true
+github:
+  enabled: true
+composer:
+  shape: claude

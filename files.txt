@@ -30,3 +30,4 @@
 ./.config/openlogi/config.toml
 ./.copilot/settings.json
 ./.copilot/copilot-instructions.md
+./.omp/agent/config.yml
