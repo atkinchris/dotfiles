@@ -1,6 +1,6 @@
 modelRoles:
   default: github-copilot/gpt-6-luna
-  advisor: github-copilot/gpt-6-sol:auto
+  advisor: github-copilot/gpt-6.1-sol:auto
 symbolPreset: nerd
 theme:
   dark: dark-catppuccin
