@@ -3,7 +3,6 @@ tap "anomalyco/tap"
 tap "atlassian/acli"
 tap "azure/azd", trusted: { casks: ["azd"] }
 tap "can1357/tap"
-tap "gentleman-programming/tap"
 tap "hashicorp/tap"
 tap "trufflesecurity/trufflehog", trusted: { formulae: ["trufflehog"] }
 # Simple, modern, secure file encryption
@@ -156,8 +155,6 @@ brew "anomalyco/tap/opencode", trusted: true
 brew "atlassian/acli/acli", trusted: true
 # Coding agent with the IDE wired in
 brew "can1357/tap/omp", trusted: true
-# Persistent memory for AI coding agents. Agent-agnostic, single binary, zero dependencies.
-brew "gentleman-programming/tap/engram", trusted: true
 # Terraform
 brew "hashicorp/tap/terraform", trusted: true
 # Command-line interface for 1Password

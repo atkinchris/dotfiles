@@ -1,13 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "lsp": true,
-  "mcp": {
-    "engram": {
-      "command": ["engram", "mcp", "--tools=agent"],
-      "enabled": true,
-      "type": "local"
-    }
-  },
   "provider": {
     "amazon-bedrock": {
       "options": {
@@ -22,7 +15,6 @@
     "edit": { "**/.op.env": "allow" },
     "external_directory": { "~/Source/**": "allow", "/tmp/**": "allow" }
   },
-  "plugin": ["opencode-agent-memory@latest"],
   "skills": {
     "paths": ["~/Source/skills"]
   }
