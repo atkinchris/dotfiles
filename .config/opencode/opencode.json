@@ -7,7 +7,12 @@
         "region": "eu-west-1",
         "profile": "default"
       },
-      "whitelist": ["eu.amazon.nova-micro-v1:0", "eu.amazon.nova-lite-v1:0", "eu.amazon.nova-pro-v1:0"]
+      "whitelist": [
+        "eu.anthropic.claude-sonnet-5",
+        "eu.anthropic.claude-sonnet-5-5",
+        "eu.anthropic.claude-opus-5",
+        "eu.anthropic.claude-opus-5-5"
+      ]
     }
   },
   "permission": {
