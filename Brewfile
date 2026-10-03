@@ -126,7 +126,7 @@ brew "tio"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Find and verify credentials
-brew "trufflehog", link: false
+brew "trufflehog"
 # Markup-based typesetting system
 brew "typst"
 # Universal boot loader
