@@ -3,6 +3,7 @@
 
 # Don't space each prompt with a new line
 add_newline = false
+command_timeout = 2000
 
 # A minimal left prompt
 format = """
