@@ -3,7 +3,7 @@
 _gh_remove_dormant_users() {
   _arguments -s \
     '--dry-run[Print actions without removing users]' \
-    '1:enterprise slug:' \
+    '1:enterprise slug or CSV report:_files -g "*.csv"' \
     '2:csv report path:_files -g "*.csv"'
 }
 

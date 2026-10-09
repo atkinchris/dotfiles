@@ -2,6 +2,7 @@
 
 # Remove dormant users listed in a CSV report
 # Usage: gh_remove_dormant_users <enterprise> <csv_report> [--dry-run]
+#        gh_remove_dormant_users <csv_report> [--dry-run]
 
 import argparse
 import csv
@@ -76,14 +77,35 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Remove dormant GitHub enterprise users from a CSV report",
     )
-    parser.add_argument("enterprise", help="GitHub enterprise slug")
-    parser.add_argument("csv_report", help="CSV report path")
+    parser.add_argument(
+        "enterprise_or_csv_report", help="GitHub enterprise slug or CSV report path"
+    )
+    parser.add_argument("csv_report", nargs="?", help="CSV report path")
     parser.add_argument(
         "--dry-run",
         action="store_true",
         help="Print actions without removing users",
     )
-    return parser.parse_args()
+    args = parser.parse_args()
+
+    if args.csv_report is None:
+        filename = args.enterprise_or_csv_report.rsplit("/", 1)[-1]
+        name, separator, timestamp = filename.removesuffix(".csv").rpartition("-")
+        if (
+            not filename.startswith("export-")
+            or not separator
+            or not timestamp.isdigit()
+            or not name.removeprefix("export-")
+        ):
+            parser.error(
+                "CSV report filename must match export-<enterprise>-<timestamp>.csv to infer the enterprise"
+            )
+        args.enterprise = name.removeprefix("export-")
+        args.csv_report = args.enterprise_or_csv_report
+    else:
+        args.enterprise = args.enterprise_or_csv_report
+
+    return args
 
 
 def main() -> int:
