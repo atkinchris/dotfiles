@@ -16,8 +16,8 @@
     }
   },
   "permission": {
-    "read": { "**/.op.env": "allow" },
-    "edit": { "**/.op.env": "allow" },
+    "read": { "*.op.env": "allow" },
+    "edit": { "*.op.env": "allow" },
     "external_directory": { "~/Source/**": "allow", "/tmp/**": "allow" }
   },
   "skills": {
