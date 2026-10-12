@@ -1,5 +1,4 @@
 tap "1password/tap", trusted: { casks: ["1password-cli"] }
-tap "anomalyco/tap"
 tap "atlassian/acli"
 tap "azure/azd", trusted: { casks: ["azd"] }
 tap "can1357/tap"
@@ -99,6 +98,8 @@ brew "k9s"
 brew "minicom"
 # Deep clean and optimize your Mac
 brew "mole"
+# AI coding agent, built for the terminal
+brew "opencode"
 # OpenBSD freely-licensed SSH connectivity tools
 brew "openssh"
 # Package compiler and linker metadata toolkit
@@ -151,8 +152,6 @@ brew "zsh"
 brew "zsh-autocomplete"
 # Additional completion definitions for zsh
 brew "zsh-completions"
-# The AI coding agent built for the terminal.
-brew "anomalyco/tap/opencode", trusted: true
 # Software to interact with Atlassian Cloud from the terminal
 brew "atlassian/acli/acli", trusted: true
 # Coding agent with the IDE wired in
