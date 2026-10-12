@@ -15,7 +15,10 @@
     "https://api.githubcopilot.com"
   ],
   "enabledPlugins": {
-    "skills@sainsburys-tech-skills": true
+    "skills@sainsburys-tech-skills": false,
+    "pbip@power-bi-agentic-development": true,
+    "semantic-models@power-bi-agentic-development": true,
+    "computer-use": true
   },
   "model": "gpt-5.6-terra",
   "extraKnownMarketplaces": {
@@ -23,6 +26,12 @@
       "source": {
         "source": "github",
         "repo": "sainsburys-tech/skills"
+      }
+    },
+    "power-bi-agentic-development": {
+      "source": {
+        "source": "github",
+        "repo": "data-goblin/power-bi-agentic-development"
       }
     }
   },
