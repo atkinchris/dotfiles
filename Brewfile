@@ -30,8 +30,6 @@ brew "python@3.14"
 brew "awscli"
 # Azure Storage data transfer utility
 brew "azcopy"
-# Microsoft Azure CLI 2.0
-brew "azure-cli"
 # Bourne-Again SHell, a UNIX command interpreter
 brew "bash"
 # GNU binary tools for native development
