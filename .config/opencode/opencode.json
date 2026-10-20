@@ -1,26 +1,18 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "lsp": true,
-  "provider": {
+  "providers": {
     "amazon-bedrock": {
-      "options": {
+      "settings": {
         "region": "eu-west-1",
         "profile": "default"
-      },
-      "whitelist": [
-        "eu.anthropic.claude-sonnet-5",
-        "eu.anthropic.claude-sonnet-5-5",
-        "eu.anthropic.claude-opus-5",
-        "eu.anthropic.claude-opus-5-5"
-      ]
+      }
     }
   },
-  "permission": {
-    "read": { "*.op.env": "allow" },
-    "edit": { "*.op.env": "allow" },
-    "external_directory": { "~/Source/**": "allow", "/tmp/**": "allow" }
-  },
-  "skills": {
-    "paths": ["~/Source/skills"]
-  }
+  "permissions": [
+    { "action": "read", "resource": "*.op.env", "effect": "allow" },
+    { "action": "edit", "resource": "*.op.env", "effect": "allow" },
+    { "action": "external_directory", "resource": "~/Source/**", "effect": "allow" },
+    { "action": "external_directory", "resource": "/tmp/**", "effect": "allow" }
+  ]
 }
