@@ -1,7 +1,6 @@
 tap "1password/tap", trusted: { casks: ["1password-cli"] }
 tap "atlassian/acli"
 tap "azure/azd", trusted: { casks: ["azd"] }
-tap "can1357/tap"
 tap "hashicorp/tap"
 tap "trufflesecurity/trufflehog", trusted: { formulae: ["trufflehog"] }
 # Simple, modern, secure file encryption
@@ -152,8 +151,6 @@ brew "zsh-autocomplete"
 brew "zsh-completions"
 # Software to interact with Atlassian Cloud from the terminal
 brew "atlassian/acli/acli", trusted: true
-# Coding agent with the IDE wired in
-brew "can1357/tap/omp", trusted: true
 # Terraform
 brew "hashicorp/tap/terraform", trusted: true
 # Command-line interface for 1Password
