@@ -1,8 +1,5 @@
-tap "1password/tap", trusted: { casks: ["1password-cli"] }
 tap "atlassian/acli"
-tap "azure/azd", trusted: { casks: ["azd"] }
 tap "hashicorp/tap"
-tap "trufflesecurity/trufflehog", trusted: { formulae: ["trufflehog"] }
 # Simple, modern, secure file encryption
 brew "age"
 # Plugin manager for zsh, inspired by antigen and antibody
