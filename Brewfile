@@ -19,12 +19,6 @@ brew "openjdk"
 brew "apktool"
 # Automatic configure script builder
 brew "autoconf"
-# Cryptography and SSL/TLS Toolkit
-brew "openssl@3"
-# Use AWS IAM credentials to authenticate to Kubernetes
-brew "aws-iam-authenticator"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.14"
 # Official Amazon AWS command-line interface
 brew "awscli"
 # Azure Storage data transfer utility
@@ -53,6 +47,8 @@ brew "dive"
 brew "dtc"
 # Embeddable SQL OLAP Database Management System
 brew "duckdb"
+# Cryptography and SSL/TLS Toolkit
+brew "openssl@3"
 # Modern, maintained replacement for ls
 brew "eza"
 # Simple, fast and user-friendly alternative to find
@@ -77,8 +73,6 @@ brew "libusb"
 brew "gnupg"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
-# Kubernetes package manager
-brew "helm"
 # Configurable static site generator
 brew "hugo"
 # Generic library support script
@@ -89,12 +83,14 @@ brew "imagemagick"
 brew "iodine"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
-# Kubernetes CLI To Manage Your Clusters In Style!
-brew "k9s"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.14"
 # Menu-driven communications program
 brew "minicom"
 # Deep clean and optimize your Mac
 brew "mole"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
 # AI coding agent, built for the terminal
 brew "opencode"
 # OpenBSD freely-licensed SSH connectivity tools
@@ -105,8 +101,6 @@ brew "pkgconf"
 brew "radare2"
 # Fast, efficient and secure backup program
 brew "restic"
-# Search tool like grep and The Silver Searcher
-brew "ripgrep"
 # Utility that provides fast incremental file transfer
 brew "rsync"
 # Extremely fast Python linter, written in Rust
