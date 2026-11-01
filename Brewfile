@@ -1,4 +1,3 @@
-tap "atlassian/acli"
 tap "hashicorp/tap"
 # Simple, modern, secure file encryption
 brew "age"
@@ -138,8 +137,6 @@ brew "zoxide"
 brew "zsh"
 # Additional completion definitions for zsh
 brew "zsh-completions"
-# Software to interact with Atlassian Cloud from the terminal
-brew "atlassian/acli/acli", trusted: true
 # Terraform
 brew "hashicorp/tap/terraform", trusted: true
 # Command-line interface for 1Password
