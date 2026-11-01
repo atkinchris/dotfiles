@@ -157,8 +157,6 @@ brew "hashicorp/tap/terraform", trusted: true
 cask "1password-cli"
 # Android SDK component
 cask "android-platform-tools"
-# Universal game trainer
-cask "bit-slicer"
 # Open source IDE for exploring and testing APIs
 cask "bruno"
 # Control USB Cameras from an app
