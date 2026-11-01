@@ -149,10 +149,6 @@ cask "bruno"
 cask "cameracontroller"
 # Brings the power of Copilot coding agent directly to your terminal
 cask "copilot-cli"
-cask "font-cascadia-code"
-cask "font-cascadia-code-pl"
-cask "font-cascadia-mono"
-cask "font-cascadia-mono-pl"
 cask "font-hack-nerd-font"
 cask "font-monaspace"
 # Terminal emulator that uses platform-native UI and GPU acceleration
