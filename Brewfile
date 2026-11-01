@@ -145,8 +145,6 @@ brew "yq"
 brew "zoxide"
 # UNIX shell (command interpreter)
 brew "zsh"
-# Real-time type-ahead completion for Zsh
-brew "zsh-autocomplete"
 # Additional completion definitions for zsh
 brew "zsh-completions"
 # Software to interact with Atlassian Cloud from the terminal
